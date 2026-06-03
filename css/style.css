@@ -154,7 +154,7 @@ select {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #F3F3F4;
+  background: linear-gradient(160deg, #1a1aff 0%, #0d0d99 40%, #060640 100%);
   overflow: visible;
 }
 
