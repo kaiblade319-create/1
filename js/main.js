@@ -1213,75 +1213,40 @@ window.addEventListener('load', () => {
     lampObserver.observe(footerLamp);
   }
 
-  // ── ARC — Giant Rotating Circle (Osmo-style) — SEAMLESS LOOP ──
+  // ── ARC — Static half-circle fan (Osmo-style) ──
   const arcScene = document.getElementById('arcScene');
-  const arcRing = document.getElementById('arcRing');
+  const arcRing  = document.getElementById('arcRing');
 
   if (arcScene && arcRing && window.innerWidth > 768) {
-    const originalCards = gsap.utils.toArray('#arcRing > .a-card');
-    const CARD_COUNT = originalCards.length; // 12
+    const cards      = gsap.utils.toArray('#arcRing > .a-card');
+    const total      = cards.length;
+    const ringRadius = arcRing.offsetWidth / 2;
 
-    // Clone all cards and append to ring for seamless 360° loop
-    originalCards.forEach(card => {
-      const clone = card.cloneNode(true);
-      clone.classList.add('a-card-clone');
-      arcRing.appendChild(clone);
-    });
-
-    // Now grab ALL cards (originals + clones = 24)
-    const allCards = gsap.utils.toArray('#arcRing > .a-card');
-    const totalCards = allCards.length;
-    
-    // The ring is 260vw × 260vw (set in CSS).
-    const ringEl = arcRing;
-    const ringDiameter = ringEl.offsetWidth;
-    const ringRadius = ringDiameter / 2;
-    
-    // Distribute ALL cards evenly around full 360° circle
-    const angleStep = 360 / totalCards;
-    const startAngle = -90; // Top of circle
-    
-    // Position each card along the circle
-    allCards.forEach((card, i) => {
-      const angleDeg = startAngle + (i * angleStep);
+    // Spread cards across the TOP semicircle only: -180° → 0°
+    cards.forEach((card, i) => {
+      const angleDeg = -180 + (180 / (total - 1)) * i;
       const angleRad = angleDeg * (Math.PI / 180);
-      
-      // Position relative to center of ring
       const cx = ringRadius + ringRadius * Math.cos(angleRad);
       const cy = ringRadius + ringRadius * Math.sin(angleRad);
-      
-      // Place card centered at this point, rotated tangent to circle
-      const cardW = card.offsetWidth;
-      const cardH = card.offsetHeight;
-      
       gsap.set(card, {
-        left: cx - cardW / 2,
-        top: cy - cardH / 2,
-        rotation: angleDeg + 90, // +90 to make cards tangent to the circle
+        left:            cx - card.offsetWidth  / 2,
+        top:             cy - card.offsetHeight / 2,
+        rotation:        angleDeg + 90,
         transformOrigin: 'center center',
-        force3D: true
+        force3D:         true
       });
     });
-    
-    // Auto-rotate the ring continuously – full 360° loops seamlessly
-    gsap.set(arcRing, { rotation: 8, force3D: true });
 
-    const autoSpin = gsap.to(arcRing, {
-      rotation: '-=360',
-      duration: 100,
-      ease: 'none',
-      force3D: true,
-      repeat: -1
-    });
+    // No auto-spin — cards are static in their fan positions
+    gsap.set(arcRing, { rotation: 0, force3D: true });
 
-    // ── Scroll-driven Osmo fan-out ──
+    // ── Scroll-driven pin + fan reveal ──
     const heroEl   = document.getElementById('hero');
     const heroText = heroEl ? heroEl.querySelector('.hero-text') : null;
 
     if (heroEl && typeof ScrollTrigger !== 'undefined') {
-      const eio = t => t < .5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2;
-      const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
-      const norm  = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
+      const eio   = t => t < .5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2;
+      const norm  = (t, a, b) => Math.max(0, Math.min(1, (t-a)/(b-a)));
 
       ScrollTrigger.create({
         trigger: heroEl,
@@ -1289,28 +1254,30 @@ window.addEventListener('load', () => {
         end: '+=1800',
         pin: true,
         pinSpacing: true,
-        onUpdate: (self) => {
-          const t = self.progress;
+        onUpdate: ({ progress: t }) => {
 
-          // ── Phase 1 (0 → 0.30): hero text slides up & fades out ──
+          // Phase 1 (0 → 0.28): hero text fades + slides up
           const textT = eio(norm(t, 0, 0.28));
           if (heroText) {
-            heroText.style.opacity   = 1 - textT;
+            heroText.style.opacity   = String(1 - textT);
             heroText.style.transform = `translateY(${-textT * 50}px)`;
           }
 
-          // ── Phase 2 (0 → 0.65): ring rises 90vh → 25vh (cards fan into view) ──
-          // ── Phase 3 (0.65 → 1.0): ring exits, 25vh → -60vh ──
+          // Phase 2 (0 → 0.45): ring rises into fan position  90vh → 25vh
+          // Phase 3 (0.45 → 0.65): ring STAYS at 25vh (cards "stuck" on screen)
+          // Phase 4 (0.65 → 1.0):  ring exits upward           25vh → -65vh
           let ringTop;
-          if (t <= 0.65) {
-            ringTop = 90 - 65 * eio(norm(t, 0, 0.65));   // 90 → 25
+          if (t <= 0.45) {
+            ringTop = 90 - 65 * eio(norm(t, 0, 0.45));      // rise
+          } else if (t <= 0.65) {
+            ringTop = 25;                                     // dwell — stuck
           } else {
-            ringTop = 25 - 85 * eio(norm(t, 0.65, 1.0)); // 25 → -60
+            ringTop = 25 - 90 * eio(norm(t, 0.65, 1.0));    // exit
           }
           arcRing.style.top = ringTop + 'vh';
 
-          // ── Mask: open as cards rise, keep open as they exit ──
-          const maskT = eio(norm(t, 0.05, 0.55));
+          // Mask: open up as ring rises, stay open through dwell + exit
+          const maskT = eio(norm(t, 0.05, 0.40));
           if (maskT >= 0.99) {
             arcScene.style.webkitMaskImage = 'none';
             arcScene.style.maskImage       = 'none';
@@ -1321,11 +1288,6 @@ window.addEventListener('load', () => {
             arcScene.style.webkitMaskImage = m;
             arcScene.style.maskImage       = m;
           }
-
-          // ── Spin: slow to 15% speed during fan, normal otherwise ──
-          const spinT = eio(norm(t, 0.1, 0.55));
-          const spinOut = eio(norm(t, 0.70, 1.0));
-          autoSpin.timeScale(1 - spinT * 0.85 + spinOut * 0.85);
         }
       });
     }
