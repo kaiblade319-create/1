@@ -4194,6 +4194,19 @@ body::after {
   color: rgba(0, 0, 0, 0.75);
   margin-bottom: 20px;
 }
+.hero-location-place {
+  display: inline;
+}
+@media (max-width: 1024px) {
+  .hero-location {
+    display: none;
+  }
+}
+@media (min-width: 1025px) {
+  .hero-location-place {
+    display: none;
+  }
+}
 
 /* ── Fix 7: Services Header Pad ── */
 .page-header {
