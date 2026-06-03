@@ -1269,51 +1269,6 @@ window.addEventListener('load', () => {
     }
     requestAnimationFrame(rotateTick);
 
-    // ── Osmo-style scroll sequence ──
-    // Phase 1 (0→0.5): arc translates up + off screen, headline fades out
-    // Phase 2 (0.4→0.8): hero inner text fades in from below
-    // Phase 3 (0.8→1.0): inner text fully visible, reel in view
-    const heroEl        = document.getElementById('hero');
-    const heroInnerText = document.getElementById('heroInnerText');
-    const heroTextEl    = arcScene.closest('.hero-page')
-                          ? arcScene.closest('.hero-page').querySelector('.hero-text')
-                          : null;
-
-    let animFrame = null;
-
-    function updateHeroScroll() {
-      animFrame = null;
-      const scrollY   = window.scrollY;
-      const heroH     = heroEl ? heroEl.offsetHeight : window.innerHeight * 2.3;
-      const scrollable = Math.max(heroH - window.innerHeight, 1);
-      const p          = Math.min(Math.max(scrollY / scrollable, 0), 1);
-
-      // Arc scene slides up (0 → 0.85 of progress)
-      const arcP  = Math.min(p / 0.85, 1);
-      const arcTY = arcP * window.innerHeight * -1.05;
-      arcScene.style.transform = `translateY(${arcTY}px)`;
-
-      // Headline + pills fade out (0 → 0.4 of progress)
-      if (heroTextEl) {
-        const fadeOut = Math.min(p / 0.4, 1);
-        heroTextEl.style.opacity = String(1 - fadeOut);
-      }
-
-      // Inner text fades in and rises up (0.35 → 0.78 of progress)
-      if (heroInnerText) {
-        const textP  = Math.min(Math.max((p - 0.35) / 0.43, 0), 1);
-        const offset = (1 - textP) * 55;
-        heroInnerText.style.opacity   = String(textP);
-        heroInnerText.style.transform = `translate(-50%, calc(-50% + ${offset}px))`;
-      }
-    }
-
-    window.addEventListener('scroll', () => {
-      if (!animFrame) animFrame = requestAnimationFrame(updateHeroScroll);
-    }, { passive: true });
-
-    // Run once so initial state is correct
-    updateHeroScroll();
   }
 
 });
