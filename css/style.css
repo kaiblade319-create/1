@@ -251,20 +251,22 @@ select {
   z-index: 5;
   pointer-events: none;
   overflow: visible;
-  /* Fade cards in from ~55% down so they appear to rise from the bottom,
-   and fade them out at 83% so they dissolve before the hero edge. */
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 83%);
-  mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 83%);
+  /* Badges are at ~60-65vh; hero is ~230vh tall so badge zone = ~27-28%.
+     Cards fade OUT when rising through the badge area, appear solid below it.
+     transparent 0→27%: hides cards in/above badge zone so badges stay readable
+     black 35→65%: cards fully visible in the main card zone
+     transparent 80%+: cards dissolve before the hero bottom edge */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 27%, black 35%, black 65%, transparent 82%);
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 27%, black 35%, black 65%, transparent 82%);
 }
 
-/* The ring — wider than original (260vh) to create a flatter, Osmo-style arc.
-   Ring top pushed down so cards appear below the hero text and badges. */
+/* The ring — wider than original (260vh) to create a flatter, Osmo-style arc. */
 .arc-ring {
   position: absolute;
   width: 260vh;
   height: 260vh;
   left: 50%;
-  top: 105vh;
+  top: 96vh;
   transform: translate(-50%, 0) rotate(0deg);
   transform-origin: center center;
   border-radius: 50%;
