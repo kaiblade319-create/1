@@ -2128,6 +2128,27 @@ body.nav-open .ticker-wrap {
 /* ========================================
    WHAT WE DO
    ======================================== */
+.about-video-section {
+  width: 100%;
+  background: #000;
+  overflow: hidden;
+}
+.about-video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+}
+.about-video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: none;
+  filter: contrast(1.05) saturate(1.1);
+}
+
 .whatwedo-section {
   background: var(--black);
   padding: clamp(50px, 7vh, 100px) 0;
