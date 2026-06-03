@@ -334,7 +334,8 @@ select {
 
 /* ── EXPANDING CARD ── */
 #card-anchor,
-#about-card-anchor {
+#about-card-anchor,
+#home-card-anchor {
   position: relative;
   width: clamp(130px, 14vw, 160px);
   height: clamp(80px, 9vw, 100px);
@@ -342,7 +343,8 @@ select {
 }
 
 #card,
-#about-card {
+#about-card,
+#home-card {
   position: absolute;
   background: radial-gradient(circle at 50% 40%, #111 0%, #020208 70%);
   border-radius: 12px;

@@ -314,6 +314,39 @@
     </div>
   </section>
 
+  <!-- ═══════════════ HOME REEL SECTION ═══════════════ -->
+  <section class="about-reel-section" id="home-reel-section">
+    <div class="about-reel-inner" id="home-reel-inner">
+      <div class="about-play-btn home-play-btn">
+        <span class="play-text" id="hPlay">Play</span>
+        <div id="home-card-anchor"></div>
+        <span class="reel-text" id="hReel">Reel</span>
+      </div>
+    </div>
+    <div id="home-card">
+      <div class="card-scanlines"></div>
+      <div class="card-glow-inner"></div>
+      <div class="reel-grid" style="display:block;overflow:hidden;padding:0;background:#000;">
+        <iframe src="https://www.youtube.com/embed/RvreULjnzFo?autoplay=1&mute=1&controls=0&loop=1&playlist=RvreULjnzFo&showinfo=0&rel=0&modestbranding=1"
+                style="position:absolute;top:50%;left:50%;width:100vw;height:56.25vw;min-width:177.77vh;min-height:100vh;transform:translate(-50%,-50%);pointer-events:none;border:none;filter:contrast(1.05) saturate(1.1);"
+                frameborder="0" allow="autoplay; fullscreen; picture-in-picture"></iframe>
+      </div>
+      <div class="play-circle" id="home-play-circle">
+        <svg id="home-play-svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M5 2.5L12.5 8L5 13.5V2.5Z" fill="#fff"/>
+        </svg>
+      </div>
+      <div class="fs-ui" id="home-fs-ui">
+        <div class="fs-close" id="home-fs-close">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke-width="1.5" stroke-linecap="round">
+            <line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/>
+          </svg>
+        </div>
+        <div class="fs-progress"><div class="fs-fill" id="home-fs-fill"></div></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══════════════ BLINK / BUILD / BOOM ═══════════════ -->
   <div class="bbb-stack-wrapper">
   <!-- ═══════════════ BLINK ═══════════════ -->
