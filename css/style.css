@@ -257,16 +257,14 @@ select {
   mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 83%);
 }
 
-/* The ring — very large (radius 120vh) to create a wide, gentle curve like Osmo.
-   Center is 196vh below hero top (96vh below viewport fold).
-   Ring element top at 76vh — 12-o'clock card crown starts at ~63vh,
-   clearing the pills row and giving text clean breathing room above. */
+/* The ring — wider than original (260vh) to create a flatter, Osmo-style arc.
+   Ring top at 72vh so the crown of cards sits just below the hero text. */
 .arc-ring {
   position: absolute;
-  width: 240vh;
-  height: 240vh;
+  width: 260vh;
+  height: 260vh;
   left: 50%;
-  top: 76vh;
+  top: 80vh;
   transform: translate(-50%, 0) rotate(0deg);
   transform-origin: center center;
   border-radius: 50%;
@@ -617,8 +615,8 @@ select {
 /* Individual cards on the ring */
 .a-card {
   position: absolute;
-  width: clamp(240px, 18vw, 320px);
-  height: clamp(170px, 14vw, 240px);
+  width: clamp(260px, 21vw, 360px);
+  height: clamp(190px, 16vw, 270px);
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 12px 48px rgba(0, 0, 0, 0.18);

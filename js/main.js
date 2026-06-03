@@ -1222,9 +1222,12 @@ window.addEventListener('load', () => {
     const total      = cards.length;
     const ringRadius = arcRing.offsetWidth / 2;
 
-    // Spread cards across the TOP semicircle only: -180° → 0°
+    // Spread cards across a ~160° arc of the top semicircle (Osmo style)
+    // -170° → -10° keeps the outermost cards tilted dramatically without vanishing off screen
+    const arcStart = -170;
+    const arcEnd   = -10;
     cards.forEach((card, i) => {
-      const angleDeg = -180 + (180 / (total - 1)) * i;
+      const angleDeg = arcStart + ((arcEnd - arcStart) / (total - 1)) * i;
       const angleRad = angleDeg * (Math.PI / 180);
       const cx = ringRadius + ringRadius * Math.cos(angleRad);
       const cy = ringRadius + ringRadius * Math.sin(angleRad);
