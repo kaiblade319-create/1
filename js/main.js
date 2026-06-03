@@ -1237,58 +1237,36 @@ window.addEventListener('load', () => {
       });
     });
 
-    // No auto-spin — cards are static in their fan positions
+    // Ring starts at rest
     gsap.set(arcRing, { rotation: 0, force3D: true });
 
-    // ── Scroll-driven pin + fan reveal ──
-    const heroEl   = document.getElementById('hero');
-    const heroText = heroEl ? heroEl.querySelector('.hero-text') : null;
+    // ── Scroll-driven rotation (Osmo style) ──
+    // As the user scrolls past the hero, the ring rotates gently so cards shift.
+    // Max rotation: ±10° over one viewport height of scroll.
+    let currentRotation = 0;
+    let targetRotation  = 0;
+    let rafRunning      = false;
 
-    if (heroEl && typeof ScrollTrigger !== 'undefined') {
-      const eio   = t => t < .5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2;
-      const norm  = (t, a, b) => Math.max(0, Math.min(1, (t-a)/(b-a)));
-
-      ScrollTrigger.create({
-        trigger: heroEl,
-        start: 'top top',
-        end: '+=1800',
-        pin: true,
-        pinSpacing: true,
-        onUpdate: ({ progress: t }) => {
-
-          // Phase 1 (0 → 0.28): hero text fades + slides up
-          const textT = eio(norm(t, 0, 0.28));
-          if (heroText) {
-            heroText.style.opacity   = String(1 - textT);
-            heroText.style.transform = `translateY(${-textT * 50}px)`;
-          }
-
-          // Phase 2 (0 → 0.45): ring rises into fan position  90vh → 25vh
-          // Phase 3 (0.45 → 0.65): ring STAYS at 25vh (cards "stuck" on screen)
-          // Phase 4 (0.65 → 1.0):  ring exits upward           25vh → -65vh
-          let ringTop;
-          if (t <= 0.45) {
-            ringTop = 90 - 65 * eio(norm(t, 0, 0.45));      // rise
-          } else if (t <= 0.65) {
-            ringTop = 25;                                     // dwell — stuck
-          } else {
-            ringTop = 25 - 90 * eio(norm(t, 0.65, 1.0));    // exit
-          }
-          arcRing.style.top = ringTop + 'vh';
-
-          // Mask: open up as ring rises — always keep a hard bottom clip so
-          // cards never bleed past the hero section into the next section.
-          // arc-scene is 140vh tall; viewport fold sits at ~71% of that height,
-          // so we cap the fully-open position at 68% (solid) / 74% (fade-out).
-          const maskT = eio(norm(t, 0.05, 0.40));
-          const s1 = Math.round(Math.min(60 + 40 * maskT, 68));
-          const s2 = Math.round(Math.min(80 + 20 * maskT, 74));
-          const m  = `linear-gradient(to bottom,black 0%,black ${s1}%,transparent ${s2}%)`;
-          arcScene.style.webkitMaskImage = m;
-          arcScene.style.maskImage       = m;
-        }
-      });
+    function tickRotation() {
+      const diff = targetRotation - currentRotation;
+      if (Math.abs(diff) < 0.01) {
+        currentRotation = targetRotation;
+        rafRunning = false;
+        return;
+      }
+      currentRotation += diff * 0.08;
+      arcRing.style.transform = `translate(-50%, 0) rotate(${currentRotation}deg)`;
+      requestAnimationFrame(tickRotation);
     }
+
+    window.addEventListener('scroll', () => {
+      const progress = Math.min(window.scrollY / window.innerHeight, 1);
+      targetRotation = progress * 10;
+      if (!rafRunning) {
+        rafRunning = true;
+        requestAnimationFrame(tickRotation);
+      }
+    }, { passive: true });
   }
 
 });

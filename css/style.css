@@ -148,18 +148,16 @@ select {
    ======================================== */
 .hero-page {
   width: 100%;
-  height: 140vh;
-  /* Tall enough to contain the full visible arc + text */
-  overflow: visible;
-  /* Cards flow freely within hero — bleeding prevented via arc-scene mask */
+  height: 100vh;
+  /* Exactly one viewport — Osmo style: hero is the full screen */
+  overflow: hidden;
+  /* Clip the ring at the hero bottom — only the top arc stays visible */
   position: relative;
   z-index: 10;
-  /* Always above parallax sections (GSAP sets those to z-index 1-3) */
   display: flex;
   flex-direction: column;
   align-items: center;
   background: #F3F3F4;
-  /* Same as body — seamless */
 }
 
 .hero-text {
@@ -245,7 +243,7 @@ select {
   }
 }
 
-/* ── ARC — Giant Rotating Circle ── */
+/* ── ARC — Osmo-style half-arc ── */
 .arc-scene {
   position: absolute;
   top: 0;
@@ -254,22 +252,23 @@ select {
   height: 100%;
   z-index: 5;
   pointer-events: none;
-  /* Let text above be clickable */
   overflow: visible;
-  /* Cards flow freely — no clipping */
-  /* Fade out cards at the bottom so they don't abruptly end or overlap next sections */
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 80%);
-  mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 80%);
+  /* Fade cards in from ~55% down so they appear to rise from the bottom,
+   and fade them out at 83% so they dissolve before the hero edge. */
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 83%);
+  mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 83%);
 }
 
-/* The giant ring — center is far below the viewport */
+/* The ring — very large (radius 120vh) to create a wide, gentle curve like Osmo.
+   Center is 196vh below hero top (96vh below viewport fold).
+   Ring element top at 76vh — 12-o'clock card crown starts at ~63vh,
+   clearing the pills row and giving text clean breathing room above. */
 .arc-ring {
   position: absolute;
-  width: 190vw;
-  height: 190vw;
+  width: 240vh;
+  height: 240vh;
   left: 50%;
-  top: 90vh;
-  /* Pushed further down so cards never overlap hero text */
+  top: 76vh;
   transform: translate(-50%, 0) rotate(0deg);
   transform-origin: center center;
   border-radius: 50%;
