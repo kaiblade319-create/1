@@ -258,13 +258,13 @@ select {
 }
 
 /* The ring — wider than original (260vh) to create a flatter, Osmo-style arc.
-   Ring top at 72vh so the crown of cards sits just below the hero text. */
+   Ring top pushed down so cards appear below the hero text and badges. */
 .arc-ring {
   position: absolute;
   width: 260vh;
   height: 260vh;
   left: 50%;
-  top: 80vh;
+  top: 105vh;
   transform: translate(-50%, 0) rotate(0deg);
   transform-origin: center center;
   border-radius: 50%;
