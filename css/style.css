@@ -150,8 +150,8 @@ select {
   width: 100%;
   height: 140vh;
   /* Tall enough to contain the full visible arc + text */
-  overflow: visible;
-  /* Cards MUST NOT be clipped */
+  overflow: hidden;
+  /* Clip cards at section boundary so they don't bleed into next sections */
   position: relative;
   z-index: 10;
   /* Always above parallax sections (GSAP sets those to z-index 1-3) */
