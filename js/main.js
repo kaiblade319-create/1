@@ -1222,12 +1222,21 @@ window.addEventListener('load', () => {
     const total      = cards.length;
     const ringRadius = arcRing.offsetWidth / 2;
 
-    // Spread cards across a ~160° arc of the top semicircle (Osmo style)
-    // -170° → -10° keeps the outermost cards tilted dramatically without vanishing off screen
-    const arcStart = -170;
-    const arcEnd   = -10;
+    // Clone each card once so we have 14 total — fills the full 360° with no blank gap
     cards.forEach((card, i) => {
-      const angleDeg = arcStart + ((arcEnd - arcStart) / (total - 1)) * i;
+      const clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.style.pointerEvents = 'none';
+      arcRing.appendChild(clone);
+    });
+
+    // Re-query so allCards includes originals + clones (14 total)
+    const allCards   = gsap.utils.toArray('#arcRing > .a-card');
+    const allTotal   = allCards.length;          // 14
+    const stepDeg    = 360 / allTotal;           // ~25.7° even spacing
+
+    allCards.forEach((card, i) => {
+      const angleDeg = -170 + stepDeg * i;       // start at -170° and go full circle
       const angleRad = angleDeg * (Math.PI / 180);
       const cx = ringRadius + ringRadius * Math.cos(angleRad);
       const cy = ringRadius + ringRadius * Math.sin(angleRad);
