@@ -264,7 +264,7 @@ select {
   width: 260vh;
   height: 260vh;
   left: 50%;
-  top: 105vh;
+  top: 96vh;
   transform: translate(-50%, 0) rotate(0deg);
   transform-origin: center center;
   border-radius: 50%;
@@ -4330,6 +4330,9 @@ body::after {
   }
 }
 @media (min-width: 1025px) {
+  .hero-location {
+    display: none;
+  }
   .hero-location-place {
     display: none;
   }

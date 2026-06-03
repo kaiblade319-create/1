@@ -2344,3 +2344,9 @@ body.bb-card-hint-seen .info-card .info-card-content::after {
     transition-duration: 0.1ms !important;
   }
 }
+
+@media (min-width: 769px) {
+  .hero-location {
+    display: none !important;
+  }
+}
