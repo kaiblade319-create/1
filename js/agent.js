@@ -13,10 +13,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set up Speech Recognition (STT)
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   let recognition = null;
-  
-  if (SpeechRecognition) {
+
+  if (!SpeechRecognition) {
+    console.warn("Speech Recognition API is not supported in this browser.");
+    agentBtn.style.display = 'none';
+    return;
+  }
+
+  try {
     recognition = new SpeechRecognition();
-    recognition.continuous = false; // Stop listening after one phrase
+    recognition.continuous = false;
     recognition.interimResults = false;
     recognition.lang = 'en-US';
 
@@ -28,8 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
     recognition.onresult = async (event) => {
       const transcript = event.results[0][0].transcript;
       console.log('User said:', transcript);
-      
-      // Send to Backend
       await processWithAI(transcript);
     };
 
@@ -43,9 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
       isListening = false;
       updateState();
     };
-  } else {
-    console.warn("Speech Recognition API is not supported in this browser.");
-    agentBtn.style.display = 'none'; // Hide if not supported
+  } catch (err) {
+    console.warn("Speech Recognition could not be initialised:", err);
+    agentBtn.style.display = 'none';
     return;
   }
 
@@ -157,15 +161,25 @@ document.addEventListener('DOMContentLoaded', () => {
   // Text-to-Speech (TTS)
   function speakResponse(text) {
     if (!window.speechSynthesis) {
-        console.warn("Speech Synthesis API not supported.");
-        updateState();
-        return;
+      console.warn("Speech Synthesis API not supported.");
+      updateState();
+      return;
     }
 
-    // Cancel any ongoing speech
-    window.speechSynthesis.cancel();
-    
-    const utterance = new SpeechSynthesisUtterance(text);
+    try {
+      window.speechSynthesis.cancel();
+    } catch (err) {
+      console.warn("speechSynthesis.cancel() failed:", err);
+    }
+
+    let utterance;
+    try {
+      utterance = new SpeechSynthesisUtterance(text);
+    } catch (err) {
+      console.warn("SpeechSynthesisUtterance failed:", err);
+      updateState();
+      return;
+    }
     
     // Attempt to pick an en-US premium voice if available
     let voices = window.speechSynthesis.getVoices();
