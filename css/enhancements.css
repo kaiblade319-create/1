@@ -22,28 +22,20 @@
     linear-gradient(150deg, #3a3bff 0%, #2d2ef0 45%, #2020cc 100%);
 }
 
-.loader-wordmark-wrap {
-  position: relative;
-  overflow: visible;
+.loader-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Animated scan-line behind wordmark */
-.loader-wordmark-wrap::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  width: 100%;
-  height: 1px;
-  background: rgba(255,255,255,0.15);
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-.loader-fill-ghost,
-.loader-fill-text {
-  font-size: clamp(24px, 10.5vw, 210px);
-  letter-spacing: clamp(1px, 0.35vw, 8px);
+.loader-logo-img {
+  width: clamp(120px, 22vw, 320px);
+  height: auto;
+  opacity: 0.25;
+  transition: opacity 0.1s linear;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 32px rgba(99, 80, 255, 0.6));
 }
 
 .loader-tagline {
