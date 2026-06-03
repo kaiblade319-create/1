@@ -148,16 +148,14 @@ select {
    ======================================== */
 .hero-page {
   width: 100%;
-  height: 100vh;
-  /* Exactly one viewport — Osmo style: hero is the full screen */
-  overflow: hidden;
-  /* Clip the ring at the hero bottom — only the top arc stays visible */
+  min-height: 130vh;
   position: relative;
   z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
   background: #F3F3F4;
+  overflow: visible;
 }
 
 .hero-text {
