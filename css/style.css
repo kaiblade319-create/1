@@ -364,12 +364,12 @@ select {
 /* ── ABOUT PAGE REEL SECTION ── */
 .about-reel-section {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   background: #080808;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .about-reel-inner {
@@ -390,9 +390,24 @@ select {
   cursor: pointer;
 }
 
+.about-play-btn:hover .play-text .letter,
+.about-play-btn:hover .reel-text .letter {
+  color: #fff;
+}
+
+/* Tablet: keep animation but tighten text size */
+@media (max-width: 900px) and (min-width: 769px) {
+  .about-play-btn .play-text,
+  .about-play-btn .reel-text {
+    font-size: clamp(32px, 5vw, 48px);
+  }
+}
+
+/* Mobile: static 16:9 video, no animation */
 @media (max-width: 768px) {
   .about-reel-section {
-    min-height: 60vw;
+    height: 56.25vw;
+    overflow: hidden;
   }
   .about-reel-inner {
     display: none;
