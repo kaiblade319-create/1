@@ -1264,16 +1264,48 @@ window.addEventListener('load', () => {
     });
     
     // Auto-rotate the ring continuously – full 360° loops seamlessly
-    // because the duplicate cards fill the other half of the circle
     gsap.set(arcRing, { rotation: 8, force3D: true });
-    
-    gsap.to(arcRing, {
-      rotation: '-=360',   // Full rotation
-      duration: 100,       // 100 seconds for one full revolution (slower, more premium)
+
+    const autoSpin = gsap.to(arcRing, {
+      rotation: '-=360',
+      duration: 100,
       ease: 'none',
       force3D: true,
-      repeat: -1           // Infinite loop
+      repeat: -1
     });
+
+    // ── Scroll-driven fan-out (Osmo style) ──
+    // Pin hero, and as user scrolls the ring rises so cards fan into view
+    const heroEl = document.getElementById('hero');
+    if (heroEl && typeof ScrollTrigger !== 'undefined') {
+      // Starting ring top (CSS value in vh units)
+      let ringTopVh = 90;
+
+      ScrollTrigger.create({
+        trigger: heroEl,
+        start: 'top top',
+        end: '+=900',
+        pin: true,
+        pinSpacing: true,
+        onUpdate: (self) => {
+          const t = self.progress;
+
+          // Ring rises from 90vh → 8vh as you scroll
+          ringTopVh = 90 - (82 * t);
+          arcRing.style.top = ringTopVh + 'vh';
+
+          // Widen the mask so rising cards aren't clipped
+          const stop1 = Math.round(60 + 38 * t);   // 60% → 98%
+          const stop2 = Math.round(80 + 18 * t);   // 80% → 98%
+          const mask = `linear-gradient(to bottom, black 0%, black ${stop1}%, transparent ${stop2}%)`;
+          arcScene.style.webkitMaskImage = mask;
+          arcScene.style.maskImage       = mask;
+
+          // Slow the spin as cards become prominent (feels more intentional)
+          autoSpin.timeScale(1 - t * 0.7);
+        }
+      });
+    }
   }
 
 });
