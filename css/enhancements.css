@@ -2346,7 +2346,7 @@ body.bb-card-hint-seen .info-card .info-card-content::after {
 }
 
 @media (min-width: 769px) {
-  .hero-location {
+  .hero-pills {
     display: none !important;
   }
 }

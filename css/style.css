@@ -4330,9 +4330,6 @@ body::after {
   }
 }
 @media (min-width: 1025px) {
-  .hero-location {
-    display: none;
-  }
   .hero-location-place {
     display: none;
   }
