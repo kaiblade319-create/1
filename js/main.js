@@ -1276,18 +1276,16 @@ window.addEventListener('load', () => {
           }
           arcRing.style.top = ringTop + 'vh';
 
-          // Mask: open up as ring rises, stay open through dwell + exit
+          // Mask: open up as ring rises — always keep a hard bottom clip so
+          // cards never bleed past the hero section into the next section.
+          // arc-scene is 140vh tall; viewport fold sits at ~71% of that height,
+          // so we cap the fully-open position at 68% (solid) / 74% (fade-out).
           const maskT = eio(norm(t, 0.05, 0.40));
-          if (maskT >= 0.99) {
-            arcScene.style.webkitMaskImage = 'none';
-            arcScene.style.maskImage       = 'none';
-          } else {
-            const s1 = Math.round(60 + 40 * maskT);
-            const s2 = Math.round(80 + 20 * maskT);
-            const m  = `linear-gradient(to bottom,black 0%,black ${s1}%,transparent ${s2}%)`;
-            arcScene.style.webkitMaskImage = m;
-            arcScene.style.maskImage       = m;
-          }
+          const s1 = Math.round(Math.min(60 + 40 * maskT, 68));
+          const s2 = Math.round(Math.min(80 + 20 * maskT, 74));
+          const m  = `linear-gradient(to bottom,black 0%,black ${s1}%,transparent ${s2}%)`;
+          arcScene.style.webkitMaskImage = m;
+          arcScene.style.maskImage       = m;
         }
       });
     }
