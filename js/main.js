@@ -1613,3 +1613,160 @@ window.addEventListener('load', () => {
     });
   }
 }());
+
+/* ========================================
+   ABOUT PAGE — EXPANDING REEL CARD
+   ======================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  const aboutCard    = document.getElementById('about-card');
+  const aboutAnchor  = document.getElementById('about-card-anchor');
+  const aboutSection = document.getElementById('about-reel-section');
+  if (!aboutCard || !aboutAnchor || !aboutSection) return;
+
+  // Split "Play" and "Reel" into individual letters
+  function splitWord(el, text) {
+    if (el) el.innerHTML = [...text].map(l => `<span class="letter">${l}</span>`).join('');
+  }
+  splitWord(document.getElementById('aPlay'), 'Play');
+  splitWord(document.getElementById('aReel'), 'Reel');
+
+  // Magnetic letter hover
+  document.querySelectorAll('#aPlay .letter, #aReel .letter').forEach(l => {
+    l.addEventListener('mousemove', e => {
+      const r = l.getBoundingClientRect();
+      const x = (e.clientX - (r.left + r.width  / 2)) / r.width  * 14;
+      const y = (e.clientY - (r.top  + r.height / 2)) / r.height * 14;
+      l.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    l.addEventListener('mouseleave', () => { l.style.transform = ''; });
+  });
+
+  // Skip animation on mobile
+  if (window.innerWidth <= 768) return;
+
+  const aboutPlayCircle = document.getElementById('about-play-circle');
+  const aboutPlaySvg    = document.getElementById('about-play-svg');
+  const aboutFsUI       = document.getElementById('about-fs-ui');
+  const aboutFsFill     = document.getElementById('about-fs-fill');
+  const aboutInner      = document.querySelector('.about-reel-inner');
+
+  let scrollProg = 0, targetProg = 0, rafId = null;
+  let isFS = false, progressTimer = null, barW = 0;
+
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+  function updateAboutCard() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+
+    const ar    = aboutAnchor.getBoundingClientRect();
+    const sRect = aboutSection.getBoundingClientRect();
+
+    const t  = ease(Math.max(0, Math.min(1, (scrollProg - .05) / .50)));
+    const cW = lerp(ar.width,              vw, t);
+    const cH = lerp(ar.height,             vh, t);
+    const cX = lerp(ar.left - sRect.left,   0, t);
+    const cY = lerp(ar.top  - sRect.top,    0, t);
+    const cR = lerp(12, 0, t);
+
+    aboutCard.style.width        = cW + 'px';
+    aboutCard.style.height       = cH + 'px';
+    aboutCard.style.left         = cX + 'px';
+    aboutCard.style.top          = cY + 'px';
+    aboutCard.style.borderRadius = cR + 'px';
+
+    const tf = Math.max(0, 1 - t * 2.8);
+    if (aboutInner) {
+      aboutInner.style.opacity      = tf;
+      aboutInner.style.transform    = `translateY(${-t * 28}px)`;
+      aboutInner.style.pointerEvents = tf > 0.15 ? 'all' : 'none';
+    }
+
+    const pc = lerp(44, 88, t);
+    if (aboutPlayCircle) {
+      aboutPlayCircle.style.width  = pc + 'px';
+      aboutPlayCircle.style.height = pc + 'px';
+      const si = Math.round(lerp(16, 28, t));
+      if (aboutPlaySvg) { aboutPlaySvg.setAttribute('width', si); aboutPlaySvg.setAttribute('height', si); }
+    }
+
+    if (t >= 0.97) {
+      if (!isFS) {
+        isFS = true;
+        if (aboutFsUI) aboutFsUI.classList.add('show');
+        if (aboutPlayCircle) aboutPlayCircle.style.opacity = '0';
+        aboutCard.style.cursor = 'default';
+        startProgress();
+      }
+    } else {
+      if (isFS) {
+        isFS = false;
+        if (aboutFsUI) aboutFsUI.classList.remove('show');
+        if (aboutPlayCircle) aboutPlayCircle.style.opacity = '1';
+        aboutCard.style.cursor = 'pointer';
+        stopProgress();
+      }
+    }
+  }
+
+  function startProgress() {
+    barW = 0;
+    progressTimer = setInterval(() => {
+      barW = Math.min(100, barW + 0.12);
+      if (aboutFsFill) aboutFsFill.style.width = barW + '%';
+      if (barW >= 100) barW = 0;
+    }, 30);
+  }
+  function stopProgress() {
+    clearInterval(progressTimer);
+    if (aboutFsFill) aboutFsFill.style.width = '0%';
+  }
+
+  function smoothStep() {
+    const delta = targetProg - scrollProg;
+    scrollProg += delta * 0.18;
+    updateAboutCard();
+    if (Math.abs(delta) > 0.001) {
+      rafId = requestAnimationFrame(smoothStep);
+    } else {
+      scrollProg = targetProg;
+      updateAboutCard();
+      rafId = null;
+    }
+  }
+
+  if (typeof ScrollTrigger !== 'undefined') {
+    ScrollTrigger.create({
+      trigger: aboutSection,
+      start: 'top top',
+      end: '+=900',
+      pin: true,
+      pinSpacing: true,
+      onUpdate: self => {
+        targetProg = self.progress;
+        if (!rafId) rafId = requestAnimationFrame(smoothStep);
+      }
+    });
+  }
+
+  setTimeout(() => { aboutCard.style.opacity = '1'; updateAboutCard(); }, 150);
+  window.addEventListener('resize', updateAboutCard);
+
+  const aboutFsClose = document.getElementById('about-fs-close');
+  if (aboutFsClose) {
+    aboutFsClose.addEventListener('click', () => {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+
+  const aboutPlayBtn = document.querySelector('.about-play-btn');
+  if (aboutPlayBtn) {
+    aboutPlayBtn.addEventListener('mouseenter', () => {
+      if (scrollProg < 0.05) aboutCard.style.transform = 'scale(1.04)';
+    });
+    aboutPlayBtn.addEventListener('mouseleave', () => {
+      if (scrollProg < 0.05) aboutCard.style.transform = 'scale(1)';
+    });
+  }
+});

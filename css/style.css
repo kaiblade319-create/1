@@ -333,14 +333,16 @@ select {
 }
 
 /* ── EXPANDING CARD ── */
-#card-anchor {
+#card-anchor,
+#about-card-anchor {
   position: relative;
   width: clamp(130px, 14vw, 160px);
   height: clamp(80px, 9vw, 100px);
   flex-shrink: 0;
 }
 
-#card {
+#card,
+#about-card {
   position: absolute;
   background: radial-gradient(circle at 50% 40%, #111 0%, #020208 70%);
   border-radius: 12px;
@@ -357,6 +359,53 @@ select {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   opacity: 0;
   transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* ── ABOUT PAGE REEL SECTION ── */
+.about-reel-section {
+  position: relative;
+  min-height: 100vh;
+  background: #080808;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.about-reel-inner {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.about-play-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .about-reel-section {
+    min-height: 60vw;
+  }
+  .about-reel-inner {
+    display: none;
+  }
+  #about-card {
+    position: relative !important;
+    width: 100% !important;
+    height: 56.25vw !important;
+    top: auto !important;
+    left: auto !important;
+    border-radius: 0 !important;
+    opacity: 1 !important;
+  }
 }
 
 /* 4‑reel video grid in fullscreen card */
@@ -2128,26 +2177,6 @@ body.nav-open .ticker-wrap {
 /* ========================================
    WHAT WE DO
    ======================================== */
-.about-video-section {
-  width: 100%;
-  background: #000;
-  overflow: hidden;
-}
-.about-video-wrapper {
-  position: relative;
-  width: 100%;
-  padding-top: 56.25%;
-}
-.about-video-wrapper iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-  pointer-events: none;
-  filter: contrast(1.05) saturate(1.1);
-}
 
 .whatwedo-section {
   background: var(--black);
