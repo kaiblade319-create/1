@@ -397,6 +397,19 @@ select {
   color: #fff;
 }
 
+/* ── Home reel section: white background override ── */
+#home-reel-section {
+  background: #fff;
+}
+#home-reel-section .play-text,
+#home-reel-section .reel-text {
+  color: #111;
+}
+#home-reel-section .about-play-btn:hover .play-text .letter,
+#home-reel-section .about-play-btn:hover .reel-text .letter {
+  color: #3d3dff;
+}
+
 /* Tablet: keep animation but tighten text size */
 @media (max-width: 900px) and (min-width: 769px) {
   .about-play-btn .play-text,
