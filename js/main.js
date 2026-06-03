@@ -1243,6 +1243,23 @@ window.addEventListener('load', () => {
     // Ring starts at rest
     gsap.set(arcRing, { rotation: 0, force3D: true });
 
+    // ── Continuous auto-rotation — same direction & feel as blue ticker ──
+    // Ticker: 25s per cycle ≈ 6.3°/s at this ring size for matching perceived speed
+    // Direction: negative (counterclockwise) = cards drift left, same as ticker
+    const DEG_PER_SEC = 6.3;
+    let autoAngle  = 0;
+    let lastTs     = null;
+
+    function rotateTick(ts) {
+      if (!lastTs) lastTs = ts;
+      const delta = Math.min((ts - lastTs) / 1000, 0.05); // cap at 50ms to avoid jump on tab refocus
+      lastTs = ts;
+      autoAngle -= DEG_PER_SEC * delta;
+      arcRing.style.transform = `translate(-50%, 0) rotate(${autoAngle}deg)`;
+      requestAnimationFrame(rotateTick);
+    }
+    requestAnimationFrame(rotateTick);
+
     // ── Osmo-style scroll sequence ──
     // Phase 1 (0→0.5): arc translates up + off screen, headline fades out
     // Phase 2 (0.4→0.8): hero inner text fades in from below
