@@ -1274,35 +1274,58 @@ window.addEventListener('load', () => {
       repeat: -1
     });
 
-    // ── Scroll-driven fan-out (Osmo style) ──
-    // Pin hero, and as user scrolls the ring rises so cards fan into view
-    const heroEl = document.getElementById('hero');
+    // ── Scroll-driven Osmo fan-out ──
+    const heroEl   = document.getElementById('hero');
+    const heroText = heroEl ? heroEl.querySelector('.hero-text') : null;
+
     if (heroEl && typeof ScrollTrigger !== 'undefined') {
-      // Starting ring top (CSS value in vh units)
-      let ringTopVh = 90;
+      const eio = t => t < .5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2;
+      const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+      const norm  = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
 
       ScrollTrigger.create({
         trigger: heroEl,
         start: 'top top',
-        end: '+=900',
+        end: '+=1800',
         pin: true,
         pinSpacing: true,
         onUpdate: (self) => {
           const t = self.progress;
 
-          // Ring rises from 90vh → 8vh as you scroll
-          ringTopVh = 90 - (82 * t);
-          arcRing.style.top = ringTopVh + 'vh';
+          // ── Phase 1 (0 → 0.30): hero text slides up & fades out ──
+          const textT = eio(norm(t, 0, 0.28));
+          if (heroText) {
+            heroText.style.opacity   = 1 - textT;
+            heroText.style.transform = `translateY(${-textT * 50}px)`;
+          }
 
-          // Widen the mask so rising cards aren't clipped
-          const stop1 = Math.round(60 + 38 * t);   // 60% → 98%
-          const stop2 = Math.round(80 + 18 * t);   // 80% → 98%
-          const mask = `linear-gradient(to bottom, black 0%, black ${stop1}%, transparent ${stop2}%)`;
-          arcScene.style.webkitMaskImage = mask;
-          arcScene.style.maskImage       = mask;
+          // ── Phase 2 (0 → 0.65): ring rises 90vh → 25vh (cards fan into view) ──
+          // ── Phase 3 (0.65 → 1.0): ring exits, 25vh → -60vh ──
+          let ringTop;
+          if (t <= 0.65) {
+            ringTop = 90 - 65 * eio(norm(t, 0, 0.65));   // 90 → 25
+          } else {
+            ringTop = 25 - 85 * eio(norm(t, 0.65, 1.0)); // 25 → -60
+          }
+          arcRing.style.top = ringTop + 'vh';
 
-          // Slow the spin as cards become prominent (feels more intentional)
-          autoSpin.timeScale(1 - t * 0.7);
+          // ── Mask: open as cards rise, keep open as they exit ──
+          const maskT = eio(norm(t, 0.05, 0.55));
+          if (maskT >= 0.99) {
+            arcScene.style.webkitMaskImage = 'none';
+            arcScene.style.maskImage       = 'none';
+          } else {
+            const s1 = Math.round(60 + 40 * maskT);
+            const s2 = Math.round(80 + 20 * maskT);
+            const m  = `linear-gradient(to bottom,black 0%,black ${s1}%,transparent ${s2}%)`;
+            arcScene.style.webkitMaskImage = m;
+            arcScene.style.maskImage       = m;
+          }
+
+          // ── Spin: slow to 15% speed during fan, normal otherwise ──
+          const spinT = eio(norm(t, 0.1, 0.55));
+          const spinOut = eio(norm(t, 0.70, 1.0));
+          autoSpin.timeScale(1 - spinT * 0.85 + spinOut * 0.85);
         }
       });
     }
