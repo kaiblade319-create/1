@@ -226,172 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ========================================
-     EXPANDING CARD REEL
-     ======================================== */
-  const card = document.getElementById('card');
-  const anchor = document.getElementById('card-anchor');
-  const heroInner = document.querySelector('.hero-inner-text');
-  const arcScene = document.getElementById('arcScene');
-  const fsUI = document.getElementById('fs-ui');
-  const playCircle = document.getElementById('play-circle');
-  const playSvg = document.getElementById('play-svg');
-  const fsFill = document.getElementById('fs-fill');
-  const cardElementsToFade = document.querySelectorAll('#card-label, #card-timer');
-  const heroPage = document.getElementById('hero');
-
-  if (card && anchor && heroPage && window.innerWidth > 768) {
-    let scrollProg = 0;
-    let targetProg = 0;
-    let rafId = null;
-    let isFS = false;
-    let progressTimer = null;
-    let barW = 0;
-
-    const lerp = (a, b, t) => a + (b - a) * t;
-    const ease = (t) => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-
-    function updateCard() {
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      
-      const ar = anchor.getBoundingClientRect();
-      const heroRect = heroPage.getBoundingClientRect();
-
-      const sW = ar.width;
-      const sH = ar.height;
-      const sX = ar.left - heroRect.left;
-      const sY = ar.top - heroRect.top;
-
-      const t = ease(Math.max(0, Math.min(1, (scrollProg - .05) / .50)));
-
-      const cW = lerp(sW, vw, t);
-      const cH = lerp(sH, vh, t);
-      const cX = lerp(sX, 0, t);
-      const cY = lerp(sY, 0, t);
-      const cR = lerp(12, 0, t);
-
-      card.style.width = cW + 'px';
-      card.style.height = cH + 'px';
-      card.style.left = cX + 'px';
-      card.style.top = cY + 'px';
-      card.style.borderRadius = cR + 'px';
-
-      const tf = Math.max(0, 1 - t * 2.8);
-      if (heroInner) {
-        heroInner.style.opacity = tf;
-        heroInner.style.transform = `translateX(-50%) translateY(${-t * 28}px)`;
-        heroInner.style.pointerEvents = tf > 0.15 ? 'all' : 'none';
-      }
-      if (arcScene) arcScene.style.opacity = tf;
-
-      const sf = Math.max(0, 1 - t * 4);
-      cardElementsToFade.forEach(el => el.style.opacity = sf);
-
-      const pc = lerp(44, 88, t);
-      if (playCircle) {
-        playCircle.style.width = pc + 'px';
-        playCircle.style.height = pc + 'px';
-        const si = Math.round(lerp(16, 28, t));
-        if (playSvg) {
-          playSvg.setAttribute('width', si);
-          playSvg.setAttribute('height', si);
-        }
-      }
-
-      if (t >= 0.97) {
-        if (!isFS) {
-          isFS = true;
-          if (fsUI) fsUI.classList.add('show');
-          if (playCircle) playCircle.style.opacity = '0';
-          card.style.cursor = 'default';
-          startProgress();
-        }
-      } else {
-        if (isFS) {
-          isFS = false;
-          if (fsUI) fsUI.classList.remove('show');
-          if (playCircle) playCircle.style.opacity = '1';
-          card.style.cursor = 'pointer';
-          stopProgress();
-        }
-      }
-    }
-
-    function startProgress() {
-      barW = 0;
-      progressTimer = setInterval(() => {
-        barW = Math.min(100, barW + 0.12);
-        if (fsFill) fsFill.style.width = barW + '%';
-        if (barW >= 100) barW = 0;
-      }, 30);
-    }
-    
-    function stopProgress() {
-      clearInterval(progressTimer);
-      if (fsFill) fsFill.style.width = '0%';
-    }
-
-    function smoothStep() {
-      const delta = targetProg - scrollProg;
-      scrollProg += delta * 0.18;
-      updateCard();
-
-      if (Math.abs(delta) > 0.001) {
-        rafId = requestAnimationFrame(smoothStep);
-      } else {
-        scrollProg = targetProg;
-        updateCard();
-        rafId = null;
-      }
-    }
-
-    // Scroll trigger to pin the hero page and drive the scrollProg
-    if (typeof ScrollTrigger !== 'undefined') {
-      const isMobile = window.innerWidth <= 768;
-      ScrollTrigger.create({
-        trigger: heroPage,
-        start: "top top",
-        end: "+=900",
-        pin: !isMobile,
-        pinSpacing: !isMobile,
-        onUpdate: (self) => {
-          targetProg = self.progress;
-          if (!rafId) {
-            rafId = requestAnimationFrame(smoothStep);
-          }
-        }
-      });
-    }
-
-    // Initial setup
-    setTimeout(() => {
-      card.style.opacity = '1';
-      updateCard();
-    }, 150);
-
-    window.addEventListener('resize', updateCard);
-
-    // Close button logic smoothly scrolls back to the unexpanded state
-    const fsClose = document.getElementById('fs-close');
-    if (fsClose) {
-      fsClose.addEventListener('click', () => {
-        window.scrollTo({top: 0, behavior: 'smooth'});
-      });
-    }
-
-    // Hover effect for the unexpanded card
-    const playReelBtn = document.querySelector('.play-reel-btn');
-    if (playReelBtn) {
-      playReelBtn.addEventListener('mouseenter', () => {
-        if (scrollProg < 0.05) card.style.transform = 'scale(1.04)';
-      });
-      playReelBtn.addEventListener('mouseleave', () => {
-        if (scrollProg < 0.05) card.style.transform = 'scale(1)';
-      });
-    }
-  }
-
   // ── Navbar scroll effect ──
   const navbar = document.querySelector('.navbar');
   if (navbar) {
@@ -1613,6 +1447,159 @@ window.addEventListener('load', () => {
     });
   }
 }());
+
+/* ========================================
+   HOME PAGE — STANDALONE REEL SECTION
+   ======================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  const homeCard    = document.getElementById('home-card');
+  const homeAnchor  = document.getElementById('home-card-anchor');
+  const homeSection = document.getElementById('home-reel-section');
+  if (!homeCard || !homeAnchor || !homeSection) return;
+
+  function splitWord(el, text) {
+    if (el) el.innerHTML = [...text].map(l => `<span class="letter">${l}</span>`).join('');
+  }
+  splitWord(document.getElementById('hPlay'), 'Play');
+  splitWord(document.getElementById('hReel'), 'Reel');
+
+  document.querySelectorAll('#hPlay .letter, #hReel .letter').forEach(l => {
+    l.addEventListener('mousemove', e => {
+      const r = l.getBoundingClientRect();
+      const x = (e.clientX - (r.left + r.width  / 2)) / r.width  * 14;
+      const y = (e.clientY - (r.top  + r.height / 2)) / r.height * 14;
+      l.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    l.addEventListener('mouseleave', () => { l.style.transform = ''; });
+  });
+
+  if (window.innerWidth <= 768) return;
+
+  const homePlayCircle = document.getElementById('home-play-circle');
+  const homePlaySvg    = document.getElementById('home-play-svg');
+  const homeFsUI       = document.getElementById('home-fs-ui');
+  const homeFsFill     = document.getElementById('home-fs-fill');
+  const homeInner      = document.getElementById('home-reel-inner');
+
+  let scrollProg = 0, targetProg = 0, rafId = null;
+  let isFS = false, progressTimer = null, barW = 0;
+
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+  function updateHomeCard() {
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const ar    = homeAnchor.getBoundingClientRect();
+    const sRect = homeSection.getBoundingClientRect();
+
+    const t  = ease(Math.max(0, Math.min(1, (scrollProg - .05) / .50)));
+    const cW = lerp(ar.width,            vw, t);
+    const cH = lerp(ar.height,           vh, t);
+    const cX = lerp(ar.left - sRect.left, 0, t);
+    const cY = lerp(ar.top  - sRect.top,  0, t);
+    const cR = lerp(12, 0, t);
+
+    homeCard.style.width        = cW + 'px';
+    homeCard.style.height       = cH + 'px';
+    homeCard.style.left         = cX + 'px';
+    homeCard.style.top          = cY + 'px';
+    homeCard.style.borderRadius = cR + 'px';
+
+    const tf = Math.max(0, 1 - t * 2.8);
+    if (homeInner) {
+      homeInner.style.opacity       = tf;
+      homeInner.style.transform     = `translateY(${-t * 28}px)`;
+      homeInner.style.pointerEvents = tf > 0.15 ? 'all' : 'none';
+    }
+
+    const pc = lerp(44, 88, t);
+    if (homePlayCircle) {
+      homePlayCircle.style.width  = pc + 'px';
+      homePlayCircle.style.height = pc + 'px';
+      const si = Math.round(lerp(16, 28, t));
+      if (homePlaySvg) { homePlaySvg.setAttribute('width', si); homePlaySvg.setAttribute('height', si); }
+    }
+
+    if (t >= 0.97) {
+      if (!isFS) {
+        isFS = true;
+        if (homeFsUI) homeFsUI.classList.add('show');
+        if (homePlayCircle) homePlayCircle.style.opacity = '0';
+        homeCard.style.cursor = 'default';
+        startProgress();
+      }
+    } else {
+      if (isFS) {
+        isFS = false;
+        if (homeFsUI) homeFsUI.classList.remove('show');
+        if (homePlayCircle) homePlayCircle.style.opacity = '1';
+        homeCard.style.cursor = 'pointer';
+        stopProgress();
+      }
+    }
+  }
+
+  function startProgress() {
+    barW = 0;
+    progressTimer = setInterval(() => {
+      barW = Math.min(100, barW + 0.12);
+      if (homeFsFill) homeFsFill.style.width = barW + '%';
+      if (barW >= 100) barW = 0;
+    }, 30);
+  }
+  function stopProgress() {
+    clearInterval(progressTimer);
+    if (homeFsFill) homeFsFill.style.width = '0%';
+  }
+
+  function smoothStep() {
+    const delta = targetProg - scrollProg;
+    scrollProg += delta * 0.18;
+    updateHomeCard();
+    if (Math.abs(delta) > 0.001) {
+      rafId = requestAnimationFrame(smoothStep);
+    } else {
+      scrollProg = targetProg;
+      updateHomeCard();
+      rafId = null;
+    }
+  }
+
+  if (typeof ScrollTrigger !== 'undefined') {
+    ScrollTrigger.create({
+      trigger: homeSection,
+      start: 'top top',
+      end: '+=900',
+      pin: true,
+      pinSpacing: true,
+      onUpdate: self => {
+        targetProg = self.progress;
+        if (!rafId) rafId = requestAnimationFrame(smoothStep);
+      }
+    });
+  }
+
+  setTimeout(() => { homeCard.style.opacity = '1'; updateHomeCard(); }, 150);
+  window.addEventListener('resize', updateHomeCard);
+
+  const homeFsClose = document.getElementById('home-fs-close');
+  if (homeFsClose) {
+    homeFsClose.addEventListener('click', () => {
+      homeSection.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
+
+  const homePlayBtn = document.querySelector('.home-play-btn');
+  if (homePlayBtn) {
+    homePlayBtn.addEventListener('mouseenter', () => {
+      if (scrollProg < 0.05) homeCard.style.transform = 'scale(1.04)';
+    });
+    homePlayBtn.addEventListener('mouseleave', () => {
+      if (scrollProg < 0.05) homeCard.style.transform = 'scale(1)';
+    });
+  }
+});
 
 /* ========================================
    ABOUT PAGE — EXPANDING REEL CARD
