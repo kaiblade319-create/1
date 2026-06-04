@@ -1214,8 +1214,10 @@ window.addEventListener('load', () => {
   }
 
   // ── Hero Inner Text — scroll-revealed paragraph ──
+  // Skip animation when element lives inside the pinned reel section
+  // (it's visible by default there; animating it conflicts with pinning)
   const heroInnerText = document.getElementById('heroInnerText');
-  if (heroInnerText) {
+  if (heroInnerText && !heroInnerText.closest('#home-reel-section')) {
     gsap.fromTo(heroInnerText,
       { opacity: 0, y: 32 },
       {

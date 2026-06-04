@@ -404,15 +404,29 @@ select {
   color: #fff;
 }
 
-/* ── Home reel section: seamless inside hero, appears after paragraph ── */
+/* ── Home reel section: pinned section with para + play/reel stacked ── */
 #home-reel-section {
-  background: transparent;
-  margin-top: 68vh;
+  background: #f2f2f2;
+  margin-top: 130vh;
   border: none;
   box-shadow: none;
   position: relative;
   z-index: 15;
   width: 100%;
+  flex-direction: column;
+  gap: 48px;
+  justify-content: center;
+  align-items: center;
+}
+/* Hero inner text is static inside the pinned reel section */
+#home-reel-section .hero-inner-text {
+  position: static;
+  opacity: 1 !important;
+  transform: none !important;
+  pointer-events: auto;
+  width: 90%;
+  max-width: 780px;
+  text-align: center;
 }
 #home-reel-section .play-text,
 #home-reel-section .reel-text {
