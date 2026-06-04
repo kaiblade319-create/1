@@ -298,12 +298,12 @@ select {
 
 .arc-hero-para {
   font-family: var(--font-body);
-  font-size: clamp(22px, 3.2vw, 52px);
+  font-size: clamp(18px, 2.2vw, 38px);
   color: #111;
-  line-height: 1.38;
+  line-height: 1.42;
   font-weight: 500;
-  letter-spacing: -0.03em;
-  max-width: 760px;
+  letter-spacing: -0.025em;
+  max-width: 680px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -404,17 +404,18 @@ select {
   color: #fff;
 }
 
-/* ── Home reel section: pinned section with para + play/reel stacked ── */
+/* ── Home reel section: sticky Osmo-style — para above, play/reel below, arc behind ── */
 #home-reel-section {
-  background: #f2f2f2;
-  margin-top: 130vh;
+  background: transparent;
+  margin-top: 38vh;
   border: none;
   box-shadow: none;
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 15;
   width: 100%;
   flex-direction: column;
-  gap: 48px;
+  gap: 72px;
   justify-content: center;
   align-items: center;
 }
