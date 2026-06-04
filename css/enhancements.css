@@ -162,14 +162,14 @@
   position: relative;
   width: 92vw;
   max-width: 860px;
-  height: 64px; /* match navbar height */
-  margin: calc(15px + 64px + 4px) auto 0; /* top clears fixed pill nav (top:15 + height:64 + gap:4) */
+  height: 30px;
+  margin: calc(15px + 52px + 4px) auto 0; /* top clears fixed pill nav (top:15 + height:52 + gap:4) */
   background: #3d3dff;
   overflow: hidden;
   z-index: 1;
   display: flex;
   align-items: center;
-  border-radius: 14px; /* match navbar border-radius */
+  border-radius: 8px;
 }
 
 .announcement-track {
@@ -1362,7 +1362,7 @@
    ======================================== */
 @media (max-width: 768px) {
   :root {
-    --nav-height: 64px;
+    --nav-height: 52px;
     --container-px: 20px;
   }
 
@@ -1371,9 +1371,9 @@
     position: relative !important;
     width: 92vw !important;
     max-width: 860px !important;
-    height: 64px !important;
-    margin: 4px auto 0 !important;
-    border-radius: 14px !important;
+    height: 30px !important;
+    margin: calc(15px + 52px + 4px) auto 0 !important;
+    border-radius: 8px !important;
   }
 
   /* HERO — COMPLETE MOBILE REDESIGN */
