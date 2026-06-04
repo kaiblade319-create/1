@@ -1527,6 +1527,8 @@ document.addEventListener('DOMContentLoaded', () => {
       homeInner.style.transform     = `translateY(${-t * 28}px)`;
       homeInner.style.pointerEvents = tf > 0.15 ? 'all' : 'none';
     }
+    const cardInfo = homeCard.querySelector('.home-card-info');
+    if (cardInfo) cardInfo.style.opacity = String(Math.max(0, 1 - t * 6));
 
     const pc = lerp(44, 88, t);
     if (homePlayCircle) {

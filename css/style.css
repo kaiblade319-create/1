@@ -298,13 +298,14 @@ select {
 
 .arc-hero-para {
   font-family: var(--font-body);
-  font-size: clamp(20px, 2.6vw, 40px);
+  font-size: clamp(22px, 3.2vw, 52px);
   color: #111;
-  line-height: 1.4;
+  line-height: 1.38;
   font-weight: 500;
-  letter-spacing: -0.025em;
-  max-width: 680px;
+  letter-spacing: -0.03em;
+  max-width: 760px;
   margin: 0 auto;
+  padding: 0 24px;
 }
 
 .play-reel-btn {
@@ -406,7 +407,7 @@ select {
 /* ── Home reel section: seamless inside hero, appears after paragraph ── */
 #home-reel-section {
   background: transparent;
-  margin-top: 130vh;
+  margin-top: 68vh;
   border: none;
   box-shadow: none;
   position: relative;
@@ -415,11 +416,75 @@ select {
 }
 #home-reel-section .play-text,
 #home-reel-section .reel-text {
-  color: #111;
+  color: #c8c8c8;
 }
 #home-reel-section .about-play-btn:hover .play-text .letter,
 #home-reel-section .about-play-btn:hover .reel-text .letter {
   color: #3d3dff;
+}
+
+/* ── "See what we do!" handwritten annotation ── */
+.hero-reel-note {
+  position: absolute;
+  bottom: -38px;
+  right: calc(50% - 260px);
+  font-family: 'Georgia', cursive;
+  font-style: italic;
+  font-size: 13px;
+  color: rgba(0,0,0,0.35);
+  letter-spacing: 0.01em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.hero-reel-note::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: -18px;
+  width: 14px;
+  height: 14px;
+  border-left: 1.5px solid rgba(0,0,0,0.25);
+  border-bottom: 1.5px solid rgba(0,0,0,0.25);
+  border-radius: 0 0 0 8px;
+  transform: rotate(-10deg);
+}
+
+/* ── Small card info bar (visible when card is in compact state) ── */
+.home-card-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px 6px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%);
+  transition: opacity 0.3s ease;
+}
+.home-card-title {
+  font-size: 9px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.home-card-dot {
+  color: #3d3dff;
+  font-size: 10px;
+  line-height: 1;
+}
+.home-card-duration {
+  font-size: 9px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Tablet: keep animation but tighten text size */
