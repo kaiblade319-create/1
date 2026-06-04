@@ -409,6 +409,9 @@ select {
   margin-top: 0;
   border: none;
   box-shadow: none;
+  position: relative;
+  z-index: 15;
+  width: 100%;
 }
 #home-reel-section .play-text,
 #home-reel-section .reel-text {
