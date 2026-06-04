@@ -275,7 +275,7 @@ select {
 /* ── HERO INNER TEXT (scroll-revealed, Osmo style) ── */
 .hero-inner-text {
   position: absolute;
-  top: 55%;
+  top: 38%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
