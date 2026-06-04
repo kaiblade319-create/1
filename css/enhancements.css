@@ -160,7 +160,7 @@
    ======================================== */
 .announcement-strip {
   position: fixed;
-  top: var(--nav-height);
+  top: calc(15px + 64px + 4px); /* pill nav: top 15px + height 64px + 4px gap */
   left: 0;
   width: 100%;
   height: 34px;
