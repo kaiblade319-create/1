@@ -264,7 +264,7 @@ select {
   width: 260vh;
   height: 260vh;
   left: 50%;
-  top: 78vh;
+  top: 58vh;
   transform: translate(-50%, 0) rotate(0deg);
   transform-origin: center center;
   border-radius: 50%;
