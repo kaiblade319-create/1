@@ -160,16 +160,16 @@
    ======================================== */
 .announcement-strip {
   position: relative;
-  top: auto;
-  left: auto;
-  width: 100%;
-  height: 34px;
-  margin-top: calc(15px + 64px + 4px); /* clear the fixed pill nav */
+  width: 92vw;
+  max-width: 860px;
+  height: 64px; /* match navbar height */
+  margin: calc(15px + 64px + 4px) auto 0; /* top clears fixed pill nav (top:15 + height:64 + gap:4) */
   background: #3d3dff;
   overflow: hidden;
   z-index: 1;
   display: flex;
   align-items: center;
+  border-radius: 14px; /* match navbar border-radius */
 }
 
 .announcement-track {
@@ -1366,12 +1366,14 @@
     --container-px: 20px;
   }
 
-  /* ── Announcement strip: full-width on mobile, relative flow ── */
+  /* ── Announcement strip: pill style on mobile ── */
   .announcement-strip {
     position: relative !important;
-    top: auto !important;
-    margin-top: calc(15px + 64px + 4px) !important;
-    height: 32px !important;
+    width: 92vw !important;
+    max-width: 860px !important;
+    height: 64px !important;
+    margin: 4px auto 0 !important;
+    border-radius: 14px !important;
   }
 
   /* HERO — COMPLETE MOBILE REDESIGN */
