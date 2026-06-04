@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
       setSeenFlag();
       const counterEl = document.getElementById('loader-percent');
       const barFill = document.getElementById('loader-bar-fill');
-      const logoImg = document.getElementById('loader-logo-img');
+      const fillText = document.getElementById('loader-fill-text');
       let current = 0;
       const duration = 2500; // total ms
       const startTime = performance.now();
@@ -181,8 +181,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (barFill) barFill.style.width = current + '%';
 
-        if (logoImg) {
-          logoImg.style.opacity = 0.25 + (eased * 0.75);
+        if (fillText) {
+          const pct = Math.floor(eased * 100);
+          fillText.style.background = `linear-gradient(to right, #ffffff ${pct}%, rgba(255,255,255,0.18) ${pct}%)`;
+          fillText.style.webkitBackgroundClip = 'text';
+          fillText.style.backgroundClip = 'text';
+          fillText.style.webkitTextFillColor = 'transparent';
         }
 
         if (progress < 1) {

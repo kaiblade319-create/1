@@ -85,11 +85,8 @@ const server = http.createServer((req, res) => {
     return handleAgentAPI(req, res);
   }
 
-  let filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url);
-
-  if (filePath.includes('?')) {
-    filePath = filePath.split('?')[0];
-  }
+  const rawPath = req.url.split('?')[0];
+  let filePath = path.join(__dirname, rawPath === '/' ? 'index.html' : rawPath);
 
   const extname = String(path.extname(filePath)).toLowerCase();
   const contentType = mimeTypes[extname] || 'application/octet-stream';
