@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Hamburger Menu ──
   const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.querySelector('.nav-links');
+  const navLinks = document.querySelector('.nav-right .nav-links');
   if (hamburger && navLinks) {
     hamburger.addEventListener('click', () => {
       hamburger.classList.toggle('open');
