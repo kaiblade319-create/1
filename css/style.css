@@ -740,7 +740,7 @@ select {
    NAVIGATION
    ======================================== */
 .navbar {
-  position: absolute;
+  position: fixed;
   top: 15px;
   left: 50%;
   transform: translateX(-50%);
