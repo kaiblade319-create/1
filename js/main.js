@@ -1213,6 +1213,26 @@ window.addEventListener('load', () => {
     lampObserver.observe(footerLamp);
   }
 
+  // ── Hero Inner Text — scroll-revealed paragraph ──
+  const heroInnerText = document.getElementById('heroInnerText');
+  if (heroInnerText) {
+    gsap.fromTo(heroInnerText,
+      { opacity: 0, y: 32 },
+      {
+        opacity: 1,
+        y: 0,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: heroInnerText,
+          start: 'top 80%',
+          end: 'top 45%',
+          scrub: false,
+          toggleActions: 'play none none reverse'
+        }
+      }
+    );
+  }
+
   // ── ARC — Static half-circle fan (Osmo-style) ──
   const arcScene = document.getElementById('arcScene');
   const arcRing  = document.getElementById('arcRing');

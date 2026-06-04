@@ -296,6 +296,17 @@ select {
   letter-spacing: -0.02em;
 }
 
+.arc-hero-para {
+  font-family: var(--font-body);
+  font-size: clamp(20px, 2.6vw, 40px);
+  color: #111;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
 .play-reel-btn {
   display: inline-flex;
   align-items: center;
