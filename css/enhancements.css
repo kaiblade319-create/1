@@ -164,7 +164,7 @@
   left: 0;
   width: 100%;
   height: 34px;
-  background: #baff29;
+  background: #3d3dff;
   overflow: hidden;
   z-index: 98;
   display: flex;
@@ -183,13 +183,13 @@
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #000;
+  color: #fff;
   padding: 0 16px;
 }
 
 .announcement-sep {
   font-size: 11px;
-  color: rgba(0,0,0,0.35);
+  color: rgba(255,255,255,0.35);
 }
 
 @keyframes announceTicker {
