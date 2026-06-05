@@ -425,39 +425,42 @@
   </section>
 
   <!-- ═══════════════ PROJECT CARDS SCROLL ROWS ═══════════════ -->
-  <section class="proj-rows-section" id="project-rows">
-    <div class="proj-rows-inner">
+  <!-- Tall wrapper drives the sticky scroll — JS sets its height dynamically -->
+  <div class="proj-pin-wrapper" id="project-rows-wrapper">
+    <section class="proj-rows-section" id="project-rows">
+      <div class="proj-rows-inner">
 
-      <!-- ROW A: cards 01–10, drifts RIGHT on scroll -->
-      <div class="proj-row proj-row--right" data-proj-row="right">
-        <div class="proj-card"><span class="proj-card-num">01</span></div>
-        <div class="proj-card"><span class="proj-card-num">02</span></div>
-        <div class="proj-card"><span class="proj-card-num">03</span></div>
-        <div class="proj-card"><span class="proj-card-num">04</span></div>
-        <div class="proj-card"><span class="proj-card-num">05</span></div>
-        <div class="proj-card"><span class="proj-card-num">06</span></div>
-        <div class="proj-card"><span class="proj-card-num">07</span></div>
-        <div class="proj-card"><span class="proj-card-num">08</span></div>
-        <div class="proj-card"><span class="proj-card-num">09</span></div>
-        <div class="proj-card"><span class="proj-card-num">10</span></div>
+        <!-- ROW A: 01–10, glides LEFT as you scroll -->
+        <div class="proj-row" data-proj-row="right">
+          <div class="proj-card"><span class="proj-card-num">01</span></div>
+          <div class="proj-card"><span class="proj-card-num">02</span></div>
+          <div class="proj-card"><span class="proj-card-num">03</span></div>
+          <div class="proj-card"><span class="proj-card-num">04</span></div>
+          <div class="proj-card"><span class="proj-card-num">05</span></div>
+          <div class="proj-card"><span class="proj-card-num">06</span></div>
+          <div class="proj-card"><span class="proj-card-num">07</span></div>
+          <div class="proj-card"><span class="proj-card-num">08</span></div>
+          <div class="proj-card"><span class="proj-card-num">09</span></div>
+          <div class="proj-card"><span class="proj-card-num">10</span></div>
+        </div>
+
+        <!-- ROW B: 01–10, starts shifted so 10 is visible first, glides RIGHT -->
+        <div class="proj-row" data-proj-row="left">
+          <div class="proj-card"><span class="proj-card-num">01</span></div>
+          <div class="proj-card"><span class="proj-card-num">02</span></div>
+          <div class="proj-card"><span class="proj-card-num">03</span></div>
+          <div class="proj-card"><span class="proj-card-num">04</span></div>
+          <div class="proj-card"><span class="proj-card-num">05</span></div>
+          <div class="proj-card"><span class="proj-card-num">06</span></div>
+          <div class="proj-card"><span class="proj-card-num">07</span></div>
+          <div class="proj-card"><span class="proj-card-num">08</span></div>
+          <div class="proj-card"><span class="proj-card-num">09</span></div>
+          <div class="proj-card"><span class="proj-card-num">10</span></div>
+        </div>
+
       </div>
-
-      <!-- ROW B: cards 10–01, drifts LEFT on scroll -->
-      <div class="proj-row proj-row--left" data-proj-row="left">
-        <div class="proj-card"><span class="proj-card-num">10</span></div>
-        <div class="proj-card"><span class="proj-card-num">09</span></div>
-        <div class="proj-card"><span class="proj-card-num">08</span></div>
-        <div class="proj-card"><span class="proj-card-num">07</span></div>
-        <div class="proj-card"><span class="proj-card-num">06</span></div>
-        <div class="proj-card"><span class="proj-card-num">05</span></div>
-        <div class="proj-card"><span class="proj-card-num">04</span></div>
-        <div class="proj-card"><span class="proj-card-num">03</span></div>
-        <div class="proj-card"><span class="proj-card-num">02</span></div>
-        <div class="proj-card"><span class="proj-card-num">01</span></div>
-      </div>
-
-    </div>
-  </section>
+    </section>
+  </div>
 
   <!-- ═══════════════ ABOUT US / OUR SERVICES CARDS ═══════════════ -->
   <section class="cards-section cards-section--redesign">

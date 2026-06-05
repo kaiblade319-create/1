@@ -1918,63 +1918,69 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   })();
 
-  // ── Pinned Project Rows (page locks; rows travel in opposite directions) ──
+  // ── Sticky Project Rows (CSS sticky + ScrollTrigger scrub) ──
   (function initProjRows() {
+    const wrapper = document.getElementById('project-rows-wrapper');
     const section = document.getElementById('project-rows');
-    if (!section || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    if (!wrapper || !section || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
     const rowRight = section.querySelector('[data-proj-row="right"]');
     const rowLeft  = section.querySelector('[data-proj-row="left"]');
     if (!rowRight || !rowLeft) return;
 
-    function buildPin() {
-      // Kill any previous instance
+    function build() {
+      // Clear any existing animations / ScrollTriggers on these rows
+      gsap.killTweensOf([rowRight, rowLeft]);
       ScrollTrigger.getAll().forEach(t => {
-        if (t.vars && t.vars.trigger === section) t.kill();
+        if (t.vars && (t.vars.trigger === wrapper)) t.kill();
       });
-      gsap.set([rowRight, rowLeft], { clearProps: 'transform' });
+      gsap.set([rowRight, rowLeft], { clearProps: 'x' });
 
-      const card   = rowRight.querySelector('.proj-card');
+      const card  = rowRight.querySelector('.proj-card');
       if (!card) return;
+
       const cardW  = card.offsetWidth;
       const gap    = parseFloat(getComputedStyle(rowRight).gap) || 20;
       const count  = rowRight.querySelectorAll('.proj-card').length;
       const rowW   = count * cardW + (count - 1) * gap;
 
-      // Distance the rows need to travel so ALL cards pass through the viewport
+      // px each row must travel to reveal every card
       const travel = Math.max(rowW - window.innerWidth + 40, 300);
 
-      // Row B (10→1) starts shifted left so card-10 is at left edge on entry
-      gsap.set(rowLeft, { x: -travel });
+      // Tall wrapper — its extra height beyond 100vh IS the scroll distance
+      wrapper.style.height = `calc(100vh + ${travel}px)`;
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: `+=${travel}`,
-          pin: true,
-          scrub: 1.2,
-          anticipatePin: 1
-        }
-      });
+      const st = {
+        trigger: wrapper,
+        start: 'top top',      // wrapper hits top of viewport
+        end: 'bottom bottom',  // wrapper's bottom hits bottom of viewport
+        scrub: 0.6
+      };
 
-      // Top row glides LEFT  →  01 enters first, 10 exits last
-      tl.to(rowRight, { x: -travel, ease: 'none' }, 0);
-      // Bottom row glides RIGHT  →  10 enters first, 01 exits last
-      tl.to(rowLeft,  { x: 0,       ease: 'none' }, 0);
+      // Row A (01→10): starts at 0, moves LEFT
+      gsap.fromTo(rowRight,
+        { x: 0 },
+        { x: -travel, ease: 'none', scrollTrigger: st }
+      );
+
+      // Row B (01→10, shifted so card-10 is visible first): moves RIGHT
+      gsap.set(rowLeft, { x: -travel });   // set initial shift
+      gsap.fromTo(rowLeft,
+        { x: -travel },
+        { x: 0, ease: 'none', scrollTrigger: { ...st } }
+      );
+
+      ScrollTrigger.refresh();
     }
 
-    // Run after full layout paint so offsetWidth is correct
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      buildPin();
-      ScrollTrigger.refresh();
-    }));
+    // Two rAFs ensure offsetWidth is correct after layout
+    requestAnimationFrame(() => requestAnimationFrame(build));
 
-    // Rebuild on resize (debounced)
-    let _resizeTimer;
+    // Rebuild on resize
+    let _rt;
     window.addEventListener('resize', () => {
-      clearTimeout(_resizeTimer);
-      _resizeTimer = setTimeout(buildPin, 300);
+      clearTimeout(_rt);
+      _rt = setTimeout(build, 300);
     });
   })();
 });
