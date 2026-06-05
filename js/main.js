@@ -1856,4 +1856,65 @@ document.addEventListener('DOMContentLoaded', () => {
       if (scrollProg < 0.05) aboutCard.style.transform = 'scale(1)';
     });
   }
+
+  // ── BB Cards cursor bubble ──
+  (function() {
+    const bubble = document.getElementById('bbCursorBubble');
+    const bubbleText = document.getElementById('bbCursorBubbleText');
+    if (!bubble || !bubbleText) return;
+
+    const aboutCard = document.querySelector('.bb-card--about');
+    const servicesCard = document.querySelector('.bb-card--services');
+    if (!aboutCard && !servicesCard) return;
+
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+    let isVisible = false;
+    let rafId = null;
+
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    function tick() {
+      currentX = lerp(currentX, targetX, 0.12);
+      currentY = lerp(currentY, targetY, 0.12);
+      bubble.style.transform = `translate(${currentX}px, ${currentY}px)`;
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function showBubble(label) {
+      bubbleText.textContent = label;
+      if (!isVisible) {
+        bubble.classList.add('bb-cursor-bubble--visible');
+        isVisible = true;
+        if (!rafId) rafId = requestAnimationFrame(tick);
+      }
+    }
+
+    function hideBubble() {
+      bubble.classList.remove('bb-cursor-bubble--visible');
+      isVisible = false;
+    }
+
+    function trackMouse(e) {
+      targetX = e.clientX;
+      targetY = e.clientY;
+    }
+
+    if (aboutCard) {
+      aboutCard.addEventListener('mouseenter', () => showBubble('ABOUT US'));
+      aboutCard.addEventListener('mouseleave', hideBubble);
+      aboutCard.addEventListener('mousemove', trackMouse);
+    }
+
+    if (servicesCard) {
+      servicesCard.addEventListener('mouseenter', () => showBubble('SERVICES'));
+      servicesCard.addEventListener('mouseleave', hideBubble);
+      servicesCard.addEventListener('mousemove', trackMouse);
+    }
+
+    // Sync initial position to avoid bubble flying in from (0,0)
+    document.addEventListener('mousemove', (e) => {
+      if (!isVisible) { currentX = e.clientX; currentY = e.clientY; }
+    }, { passive: true });
+  })();
 });

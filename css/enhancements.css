@@ -2623,9 +2623,9 @@ body.bb-card-hint-seen .info-card .info-card-content::after {
   margin: 0 auto;
   padding: 0 clamp(16px, 4vw, 60px);
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 0;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  gap: clamp(14px, 2vw, 24px);
 }
 
 /* ── Shared card base ── */
@@ -2741,43 +2741,56 @@ body.bb-card-hint-seen .info-card .info-card-content::after {
   font-size: 20px;
 }
 
-/* ── CENTER: Floating button ── */
-.bb-center-btn {
-  width: 84px;
-  height: 84px;
+/* ── Cursor Bubble ── */
+.bb-cursor-bubble {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+}
+
+.bb-cursor-bubble-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background: #f97316;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-decoration: none;
-  color: #fff;
-  z-index: 10;
-  position: relative;
-  flex-shrink: 0;
-  margin: 0 -16px;
-  box-shadow: 0 8px 32px rgba(249,115,22,0.4);
-  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 8px 32px rgba(249, 115, 22, 0.45);
 }
 
-.bb-center-btn:hover {
-  transform: scale(1.12);
-  box-shadow: 0 12px 48px rgba(249,115,22,0.6);
+.bb-cursor-bubble--visible .bb-cursor-bubble-inner {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
-.bb-center-btn-text {
+.bb-cursor-bubble-text {
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 11px;
   letter-spacing: 2px;
+  color: #fff;
   line-height: 1;
+  text-align: center;
 }
 
-.bb-center-btn-arrow {
-  font-size: 16px;
+.bb-cursor-bubble-arrow {
+  font-size: 18px;
+  color: #fff;
   line-height: 1;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 /* ── RIGHT: Services card ── */
