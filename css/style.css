@@ -3586,6 +3586,71 @@ body.nav-open .ticker-wrap {
   width: min(500px, 40vw);
 }
 
+/* ── Footer CTA strip ── */
+.footer-cta-strip {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 28px 0;
+}
+
+.footer-cta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.footer-cta-text {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.8vw, 22px);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.footer-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 26px;
+  background: #3b4fff;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 40px;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+  white-space: nowrap;
+}
+
+.footer-cta-btn:hover {
+  background: #5a5aff;
+  box-shadow: 0 0 28px rgba(59, 79, 255, 0.55);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .footer-cta-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+}
+
+/* ── Footer bottom legal links ── */
+.footer-bottom-legal a {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 12px;
+  transition: color 0.25s ease;
+}
+
+.footer-bottom-legal a:hover {
+  color: rgba(255, 255, 255, 0.55);
+}
+
 /* ── Footer content — hidden until light is on ── */
 .footer-content {
   position: relative;
