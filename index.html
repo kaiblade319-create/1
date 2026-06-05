@@ -424,14 +424,13 @@
     </div>
   </section>
 
-  <!-- ═══════════════ PROJECT CARDS SCROLL ROWS ═══════════════ -->
-  <!-- Tall wrapper drives the sticky scroll — JS sets its height dynamically -->
-  <div class="proj-pin-wrapper" id="project-rows-wrapper">
-    <section class="proj-rows-section" id="project-rows">
-      <div class="proj-rows-inner">
+  <!-- ═══════════════ PROJECT CARDS AUTO-SCROLL ROWS ═══════════════ -->
+  <section class="proj-rows-section" id="project-rows">
+    <div class="proj-rows-inner">
 
-        <!-- ROW A: 01–10, glides LEFT as you scroll -->
-        <div class="proj-row" data-proj-row="right">
+      <!-- ROW A: loops 01→10, moves LEFT -->
+      <div class="proj-marquee-wrap">
+        <div class="proj-row proj-row--left-scroll">
           <div class="proj-card"><span class="proj-card-num">01</span></div>
           <div class="proj-card"><span class="proj-card-num">02</span></div>
           <div class="proj-card"><span class="proj-card-num">03</span></div>
@@ -442,25 +441,49 @@
           <div class="proj-card"><span class="proj-card-num">08</span></div>
           <div class="proj-card"><span class="proj-card-num">09</span></div>
           <div class="proj-card"><span class="proj-card-num">10</span></div>
+          <!-- duplicate for seamless loop -->
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">01</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">02</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">03</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">04</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">05</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">06</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">07</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">08</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">09</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">10</span></div>
         </div>
-
-        <!-- ROW B: 01–10, starts shifted so 10 is visible first, glides RIGHT -->
-        <div class="proj-row" data-proj-row="left">
-          <div class="proj-card"><span class="proj-card-num">01</span></div>
-          <div class="proj-card"><span class="proj-card-num">02</span></div>
-          <div class="proj-card"><span class="proj-card-num">03</span></div>
-          <div class="proj-card"><span class="proj-card-num">04</span></div>
-          <div class="proj-card"><span class="proj-card-num">05</span></div>
-          <div class="proj-card"><span class="proj-card-num">06</span></div>
-          <div class="proj-card"><span class="proj-card-num">07</span></div>
-          <div class="proj-card"><span class="proj-card-num">08</span></div>
-          <div class="proj-card"><span class="proj-card-num">09</span></div>
-          <div class="proj-card"><span class="proj-card-num">10</span></div>
-        </div>
-
       </div>
-    </section>
-  </div>
+
+      <!-- ROW B: loops 10→01, moves RIGHT -->
+      <div class="proj-marquee-wrap">
+        <div class="proj-row proj-row--right-scroll">
+          <div class="proj-card"><span class="proj-card-num">10</span></div>
+          <div class="proj-card"><span class="proj-card-num">09</span></div>
+          <div class="proj-card"><span class="proj-card-num">08</span></div>
+          <div class="proj-card"><span class="proj-card-num">07</span></div>
+          <div class="proj-card"><span class="proj-card-num">06</span></div>
+          <div class="proj-card"><span class="proj-card-num">05</span></div>
+          <div class="proj-card"><span class="proj-card-num">04</span></div>
+          <div class="proj-card"><span class="proj-card-num">03</span></div>
+          <div class="proj-card"><span class="proj-card-num">02</span></div>
+          <div class="proj-card"><span class="proj-card-num">01</span></div>
+          <!-- duplicate for seamless loop -->
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">10</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">09</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">08</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">07</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">06</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">05</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">04</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">03</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">02</span></div>
+          <div class="proj-card" aria-hidden="true"><span class="proj-card-num">01</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
 
   <!-- ═══════════════ ABOUT US / OUR SERVICES CARDS ═══════════════ -->
   <section class="cards-section cards-section--redesign">

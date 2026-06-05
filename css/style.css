@@ -5605,43 +5605,60 @@ body.bb-flip-hint-seen .flip-tap-hint {
 }
 
 /* ═══════════════════════════════════════════════════
-   PROJECT SCROLL ROWS  (scroll-driven horizontal drift)
+   PROJECT CARD MARQUEE ROWS  (auto-scroll, no interaction needed)
    ═══════════════════════════════════════════════════ */
-/* Tall wrapper — JS sets height to 100vh + travel so sticky drives the animation */
-.proj-pin-wrapper {
-  position: relative;
-  /* height set by JS */
-}
-
-/* Sticky panel: locks to viewport while wrapper scrolls past */
 .proj-rows-section {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
   background: #F3F3F4;
+  padding: clamp(56px, 7vw, 100px) 0;
   overflow: hidden;
 }
 
 .proj-rows-inner {
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 22px;
 }
 
+/* Clip each row at the viewport edges */
+.proj-marquee-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+
 .proj-row {
   display: flex;
   gap: 20px;
-  will-change: transform;
+  width: max-content;    /* expands to fit all cards */
 }
 
-/* GSAP owns all transforms — no CSS offsets on rows */
+/* Row A — moves left continuously (01→10 looping) */
+.proj-row--left-scroll {
+  animation: projLeft 38s linear infinite;
+}
+
+/* Row B — moves right continuously (10→01 looping) */
+.proj-row--right-scroll {
+  animation: projRight 38s linear infinite;
+}
+
+@keyframes projLeft {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes projRight {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* Pause on hover for usability */
+.proj-marquee-wrap:hover .proj-row {
+  animation-play-state: paused;
+}
 
 .proj-card {
   flex-shrink: 0;
-  width: clamp(280px, 28vw, 400px);
+  width: clamp(260px, 26vw, 380px);
   aspect-ratio: 16 / 10;
   border-radius: 16px;
   background: #fff;
@@ -5661,7 +5678,7 @@ body.bb-flip-hint-seen .flip-tap-hint {
 
 .proj-card-num {
   font-family: var(--font-display);
-  font-size: clamp(48px, 5.5vw, 80px);
+  font-size: clamp(44px, 5vw, 72px);
   font-weight: 800;
   color: rgba(0, 0, 0, 0.07);
   letter-spacing: -3px;
@@ -5676,6 +5693,10 @@ body.bb-flip-hint-seen .flip-tap-hint {
 
 @media (max-width: 768px) {
   .proj-card {
-    width: clamp(200px, 52vw, 280px);
+    width: clamp(180px, 48vw, 260px);
+  }
+  .proj-row--left-scroll,
+  .proj-row--right-scroll {
+    animation-duration: 28s;
   }
 }
