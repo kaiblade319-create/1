@@ -60,20 +60,41 @@
   </div>
 
   <!-- ═══════════════ NAVIGATION ═══════════════ -->
-  <nav class="navbar">
-    <div class="nav-inner">
-      <button class="hamburger nav-menu-btn" aria-label="Menu">
-        <span></span><span></span>
-        <span class="nav-menu-label">Menu</span>
+  <nav class="navbar" id="cardNav">
+    <div class="card-nav-top">
+      <button class="cn-hamburger" id="cnHamburger" aria-label="Open menu">
+        <span class="cn-line"></span>
+        <span class="cn-line"></span>
+        <span class="cn-label">MENU</span>
       </button>
       <a href="index.html" class="nav-logo">BLINK <span>BEYOND</span></a>
-      <div class="nav-right">
-        <div class="nav-links">
-          <a href="index.html">Home</a>
-          <a href="about.html" class="active">About</a>
-          <a href="services.html">Services</a>
+      <a href="contact.html" class="cn-cta">Get Started</a>
+    </div>
+    <div class="card-nav-content" id="cardNavContent">
+      <div class="cn-card">
+        <div class="cn-card-label">Services</div>
+        <div class="cn-card-links">
+          <a href="services.html" class="cn-card-link">↗ Web Development</a>
+          <a href="services.html" class="cn-card-link">↗ Social Media</a>
+          <a href="services.html" class="cn-card-link">↗ Performance Ads</a>
+          <a href="services.html" class="cn-card-link">↗ SEO &amp; Branding</a>
         </div>
-        <a href="contact.html" class="nav-cta-pill">Get Started</a>
+      </div>
+      <div class="cn-card cn-card--mid">
+        <div class="cn-card-label">About</div>
+        <div class="cn-card-links">
+          <a href="about.html" class="cn-card-link">↗ Our Story</a>
+          <a href="about.html" class="cn-card-link">↗ The Team</a>
+          <a href="about.html" class="cn-card-link">↗ Our Process</a>
+        </div>
+      </div>
+      <div class="cn-card cn-card--blue">
+        <div class="cn-card-label">Contact</div>
+        <div class="cn-card-links">
+          <a href="contact.html" class="cn-card-link">↗ Get in Touch</a>
+          <a href="contact.html" class="cn-card-link">↗ WhatsApp</a>
+          <a href="contact.html" class="cn-card-link">↗ LinkedIn</a>
+        </div>
       </div>
     </div>
   </nav>

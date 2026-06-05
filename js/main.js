@@ -244,38 +244,79 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── Active nav link ──
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    const href = link.getAttribute('href');
-    if (href === currentPage || 
-        (currentPage === '' && href === 'index.html') ||
-        (currentPage === 'index.html' && href === 'index.html')) {
-      link.classList.add('active');
-    }
-  });
+  // ── CardNav GSAP ──
+  (function initCardNav() {
+    const nav     = document.getElementById('cardNav');
+    const btn     = document.getElementById('cnHamburger');
+    const content = document.getElementById('cardNavContent');
+    const cards   = Array.from(document.querySelectorAll('.cn-card'));
+    if (!nav || !btn || !content || !cards.length) return;
 
-  // ── Hamburger Menu ──
-  const hamburger = document.querySelector('.hamburger');
-  const navLinks = document.querySelector('.nav-right .nav-links');
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      navLinks.classList.toggle('open');
-      const isOpen = navLinks.classList.contains('open');
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-      document.body.classList.toggle('nav-open', isOpen);
+    const COLLAPSED = 52;
+    let isOpen = false;
+    let tl = null;
+
+    const getExpandedHeight = () => {
+      const saved = { vis: content.style.visibility, pos: content.style.position,
+                      h: content.style.height, pe: content.style.pointerEvents };
+      content.style.visibility    = 'hidden';
+      content.style.position      = 'static';
+      content.style.height        = 'auto';
+      content.style.pointerEvents = 'none';
+      content.offsetHeight; // force reflow
+      const measured = COLLAPSED + 8 + content.scrollHeight + 8;
+      content.style.visibility    = saved.vis;
+      content.style.position      = saved.pos;
+      content.style.height        = saved.h;
+      content.style.pointerEvents = saved.pe;
+      return Math.max(measured, 240);
+    };
+
+    const buildTl = () => {
+      if (tl) tl.kill();
+      gsap.set(nav, { height: COLLAPSED, overflow: 'hidden' });
+      gsap.set(cards, { y: 24, opacity: 0 });
+      tl = gsap.timeline({ paused: true })
+        .to(nav, { height: getExpandedHeight, duration: 0.42, ease: 'power3.out' })
+        .to(cards, { y: 0, opacity: 1, duration: 0.35, ease: 'power3.out', stagger: 0.07 }, '-=0.22');
+      return tl;
+    };
+
+    buildTl();
+
+    btn.addEventListener('click', () => {
+      if (!isOpen) {
+        isOpen = true;
+        btn.classList.add('open');
+        btn.setAttribute('aria-label', 'Close menu');
+        buildTl().play(0);
+      } else {
+        isOpen = false;
+        btn.classList.remove('open');
+        btn.setAttribute('aria-label', 'Open menu');
+        tl.reverse();
+      }
     });
-    // Close on link click
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('open');
-        navLinks.classList.remove('open');
-        document.body.style.overflow = '';
-        document.body.classList.remove('nav-open');
-      });
+
+    document.addEventListener('click', (e) => {
+      if (isOpen && !nav.contains(e.target)) {
+        isOpen = false;
+        btn.classList.remove('open');
+        btn.setAttribute('aria-label', 'Open menu');
+        tl.reverse();
+      }
     });
-  }
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        const wasOpen = isOpen;
+        buildTl();
+        if (wasOpen) tl.progress(1);
+      }, 150);
+    });
+  })();
 
   // ── Scroll Reveal (Intersection Observer) ──
   const revealEls = document.querySelectorAll('.reveal');
