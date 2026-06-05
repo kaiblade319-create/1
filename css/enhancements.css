@@ -160,15 +160,13 @@
    ======================================== */
 .announcement-strip {
   position: relative;
-  top: auto;
-  left: auto;
-  transform: none;
-  width: 100%;
-  max-width: none;
+  width: 92vw;
+  max-width: 860px;
   height: 32px;
+  margin: calc(15px + 52px + 6px) auto 0; /* top:15 + height:52 + gap:6 */
   background: #3d3dff;
   overflow: hidden;
-  z-index: auto;
+  z-index: 1;
   display: flex;
   align-items: center;
   border-radius: 12px;
@@ -1367,12 +1365,9 @@
     --container-px: 20px;
   }
 
-  /* ── Announcement strip: back to flow on mobile ── */
+  /* ── Announcement strip: pill style on mobile ── */
   .announcement-strip {
     position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    transform: none !important;
     width: 92vw !important;
     max-width: 860px !important;
     height: 32px !important;
