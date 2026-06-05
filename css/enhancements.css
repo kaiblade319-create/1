@@ -162,14 +162,14 @@
   position: relative;
   width: 92vw;
   max-width: 860px;
-  height: 30px;
-  margin: calc(15px + 52px + 4px) auto 0; /* top clears fixed pill nav (top:15 + height:52 + gap:4) */
+  height: 32px;
+  margin: calc(15px + 52px + 6px) auto 0; /* top:15 + height:52 + gap:6 */
   background: #3d3dff;
   overflow: hidden;
   z-index: 1;
   display: flex;
   align-items: center;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
 .announcement-track {
@@ -1370,9 +1370,9 @@
     position: relative !important;
     width: 92vw !important;
     max-width: 860px !important;
-    height: 30px !important;
-    margin: calc(15px + 52px + 4px) auto 0 !important;
-    border-radius: 8px !important;
+    height: 32px !important;
+    margin: calc(15px + 52px + 6px) auto 0 !important;
+    border-radius: 12px !important;
   }
 
   /* HERO — COMPLETE MOBILE REDESIGN */
