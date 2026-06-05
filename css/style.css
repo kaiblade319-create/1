@@ -5625,51 +5625,48 @@ body.bb-flip-hint-seen .flip-tap-hint {
   will-change: transform;
 }
 
-/* Row A starts slightly left so it has room to drift right */
-.proj-row--right {
-  transform: translateX(-6%);
-}
-
-/* Row B starts slightly right so it has room to drift left */
+/* GSAP owns the transform entirely — no CSS offset here */
+.proj-row--right,
 .proj-row--left {
-  transform: translateX(6%);
+  /* intentionally empty — initial position set by gsap.fromTo() */
 }
 
 .proj-card {
   flex-shrink: 0;
-  width: clamp(140px, 14vw, 200px);
-  aspect-ratio: 3 / 4;
-  border-radius: 16px;
+  width: clamp(240px, 24vw, 340px);
+  aspect-ratio: 4 / 5;
+  border-radius: 20px;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.07);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
   transition: box-shadow 0.35s ease, border-color 0.35s ease;
   cursor: default;
 }
 
 .proj-card:hover {
-  box-shadow: 0 12px 40px rgba(61, 61, 255, 0.1);
-  border-color: rgba(61, 61, 255, 0.18);
+  box-shadow: 0 16px 48px rgba(61, 61, 255, 0.12);
+  border-color: rgba(61, 61, 255, 0.2);
 }
 
 .proj-card-num {
   font-family: var(--font-display);
-  font-size: clamp(28px, 3.5vw, 52px);
+  font-size: clamp(40px, 5vw, 72px);
   font-weight: 800;
-  color: rgba(0, 0, 0, 0.1);
-  letter-spacing: -1px;
+  color: rgba(0, 0, 0, 0.08);
+  letter-spacing: -2px;
   user-select: none;
   transition: color 0.35s ease;
 }
 
 .proj-card:hover .proj-card-num {
-  color: var(--blue);
+  color: rgba(61, 61, 255, 0.18);
 }
 
 @media (max-width: 680px) {
   .proj-card {
-    width: clamp(110px, 30vw, 150px);
+    width: clamp(160px, 42vw, 220px);
   }
 }

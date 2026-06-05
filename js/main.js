@@ -1926,32 +1926,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const rowRight = section.querySelector('[data-proj-row="right"]');
     const rowLeft  = section.querySelector('[data-proj-row="left"]');
 
-    const DRIFT = '8%';
+    const st = {
+      trigger: section,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 1.6
+    };
 
+    // Row drifts from left→right as section scrolls into/through view
     if (rowRight) {
-      gsap.to(rowRight, {
-        x: DRIFT,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1.4
-        }
-      });
+      gsap.fromTo(rowRight,
+        { xPercent: -10 },
+        { xPercent: 10, ease: 'none', scrollTrigger: st }
+      );
     }
 
+    // Row drifts from right→left
     if (rowLeft) {
-      gsap.to(rowLeft, {
-        x: '-' + DRIFT,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 1.4
-        }
-      });
+      gsap.fromTo(rowLeft,
+        { xPercent: 10 },
+        { xPercent: -10, ease: 'none', scrollTrigger: st }
+      );
     }
   })();
 });
