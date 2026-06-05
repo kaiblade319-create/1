@@ -438,6 +438,13 @@ select {
   color: #3d3dff;
 }
 
+/* Scroll spacer replacing GSAP pin-spacer for the home reel sticky section */
+.home-reel-spacer {
+  height: 900px;
+  pointer-events: none;
+  background: transparent;
+}
+
 /* ── OSMO-style horizontal crosshair line ── */
 .reel-h-line {
   position: absolute;

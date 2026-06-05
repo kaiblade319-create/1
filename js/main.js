@@ -1673,8 +1673,6 @@ document.addEventListener('DOMContentLoaded', () => {
       trigger: homeSection,
       start: 'top top',
       end: '+=900',
-      pin: true,
-      pinSpacing: true,
       onUpdate: self => {
         targetProg = self.progress;
         if (!rafId) rafId = requestAnimationFrame(smoothStep);
