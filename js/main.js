@@ -404,6 +404,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile: no animation — sections display statically via CSS
   }
 
+  // ── OSMO-style reel ring: circle + 36 tick marks ──
+  const ringSvg = document.getElementById('reel-ring');
+  if (ringSvg) {
+    const r = 200, tickLen = 8, numTicks = 36;
+    let markup = `<circle cx="0" cy="0" r="${r}" fill="none" stroke="rgba(0,0,0,0.09)" stroke-width="1"/>`;
+    for (let i = 0; i < numTicks; i++) {
+      const angle = (i * 360 / numTicks) * Math.PI / 180;
+      const cos = Math.cos(angle), sin = Math.sin(angle);
+      const x1 = (cos * (r - tickLen)).toFixed(2), y1 = (sin * (r - tickLen)).toFixed(2);
+      const x2 = (cos * r).toFixed(2),             y2 = (sin * r).toFixed(2);
+      markup += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="rgba(0,0,0,0.09)" stroke-width="1"/>`;
+    }
+    ringSvg.innerHTML = markup;
+  }
+
   // ── Contact form interaction ──
   const contactForm = document.getElementById('contactForm');
   // (Formspree handles the submission natively, so JS intercept is removed)

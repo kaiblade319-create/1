@@ -438,30 +438,55 @@ select {
   color: #3d3dff;
 }
 
+/* ── OSMO-style horizontal crosshair line ── */
+.reel-h-line {
+  position: absolute;
+  top: 50%;
+  left: -50vw;
+  width: 200vw;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.09);
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── OSMO-style circular tick ring ── */
+.reel-ring-svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  height: 480px;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+
 /* ── "See what we do!" handwritten annotation ── */
 .hero-reel-note {
   position: absolute;
-  bottom: -38px;
-  right: calc(50% - 260px);
+  bottom: -46px;
+  right: calc(50% - 270px);
   font-family: 'Georgia', cursive;
   font-style: italic;
   font-size: 13px;
-  color: rgba(0,0,0,0.35);
+  color: rgba(0, 0, 0, 0.38);
   letter-spacing: 0.01em;
   pointer-events: none;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 2px;
 }
 .hero-reel-note::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: -18px;
-  width: 14px;
-  height: 14px;
-  border-left: 1.5px solid rgba(0,0,0,0.25);
-  border-bottom: 1.5px solid rgba(0,0,0,0.25);
-  border-radius: 0 0 0 8px;
-  transform: rotate(-10deg);
+  content: none;
+}
+.reel-note-arrow {
+  width: 52px;
+  height: 34px;
+  flex-shrink: 0;
 }
 
 /* ── Small card info bar (visible when card is in compact state) ── */
