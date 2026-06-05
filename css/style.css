@@ -5055,12 +5055,18 @@ body::after {
 }
 
 /* ── Team Showcase Section ── */
+/* ═══════════════════════════════════════════════════
+   TEAM SHOWCASE — CREATIVE MINDS  (scatter layout)
+   7 cards at unique absolute positions, each enters from a different direction
+   ═══════════════════════════════════════════════════ */
 .team-showcase-section {
   position: relative;
   background: var(--white);
-  padding: 10vh 0 10vh;
+  height: 380vh;         /* tall enough for all 7 to have unique entry points */
+  overflow: hidden;
 }
 
+/* "CREATIVE MINDS" stays locked to center while page scrolls */
 .team-sticky-container {
   position: sticky;
   top: 0;
@@ -5085,30 +5091,28 @@ body::after {
   margin: 0;
 }
 
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2vw;
-  max-width: 90vw;
-  margin: -80vh auto 0; /* Pull grid up into the sticky text area */
-  padding-bottom: 20vh; /* Extra scroll space at bottom */
-  position: relative;
+/* Absolute container fills the full tall section */
+.team-scatter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 5;
 }
 
 .team-item {
-  position: relative;
+  position: absolute;
 }
 
-/* Stagger heights/margins for masonry look */
-.team-item.t-1 { margin-top: 10vh; }
-.team-item.t-2 { margin-top: 40vh; }
-.team-item.t-3 { margin-top: 20vh; }
-.team-item.t-4 { margin-top: 60vh; }
-.team-item.t-5 { margin-top: 15vh; }
-.team-item.t-6 { margin-top: 5vh; }
-.team-item.t-7 { margin-top: 30vh; }
-.team-item.t-8 { margin-top: 50vh; }
+/* 7 unique positions — scattered across the full section height */
+.team-item.t-1 { width: clamp(160px, 19vw, 280px); left: 4%;  top: 6%;  }
+.team-item.t-2 { width: clamp(180px, 23vw, 340px); left: 63%; top: 4%;  }
+.team-item.t-3 { width: clamp(170px, 21vw, 310px); left: 33%; top: 20%; }
+.team-item.t-4 { width: clamp(150px, 17vw, 250px); left: 75%; top: 34%; }
+.team-item.t-5 { width: clamp(180px, 25vw, 360px); left: 5%;  top: 48%; }
+.team-item.t-6 { width: clamp(190px, 27vw, 380px); left: 46%; top: 57%; }
+.team-item.t-7 { width: clamp(160px, 20vw, 290px); left: 71%; top: 70%; }
 
 .team-img-wrap {
   width: 100%;
@@ -5116,9 +5120,7 @@ body::after {
   overflow: hidden;
   border-radius: 12px;
   will-change: transform, opacity;
-  /* GSAP animates these in from opacity:0 — pre-hide in CSS so there's
-     no visible flash before GSAP applies its initial 'from' state */
-  opacity: 0;
+  opacity: 0;   /* GSAP reveals each from its unique entry direction */
 }
 
 .team-img {
@@ -5134,16 +5136,33 @@ body::after {
   transform: scale(1.1);
 }
 
+/* Mobile: drop absolute positioning → simple 2-column flow */
 @media (max-width: 900px) {
-  .team-grid {
-    grid-template-columns: repeat(2, 1fr);
-    margin-top: 0;
-    gap: 4vw;
+  .team-showcase-section {
+    height: auto;
+    overflow: visible;
+    padding: 60px 0 80px;
   }
-  /* Remove stagger offsets to keep founders cards aligned */
-  .team-item.t-1, .team-item.t-3, .team-item.t-5, .team-item.t-7,
-  .team-item.t-2, .team-item.t-4, .team-item.t-6, .team-item.t-8 {
-    margin-top: 0;
+  .team-sticky-container {
+    position: relative;
+    height: auto;
+    padding: 60px 0 40px;
+  }
+  .team-scatter {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 0 5vw;
+  }
+  .team-item {
+    position: relative;
+    width: 100% !important;
+    top: auto !important;
+    left: auto !important;
+  }
+  .team-img-wrap {
+    opacity: 1;
   }
 }
 

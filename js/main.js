@@ -1417,38 +1417,47 @@ window.addEventListener('load', () => {
 })();
 
 // ══════════════════════════════════════════
-// Team Showcase Scroll Animation
+// Team Showcase — Scatter Entry Animations
+// Each of the 7 cards flies in from a unique direction
 // ══════════════════════════════════════════
 (function() {
   const teamSection = document.querySelector('.team-showcase-section');
-  const teamItems = document.querySelectorAll('.team-img-wrap');
-  
-  if (teamSection && teamItems.length) {
-    teamItems.forEach((item, i) => {
-      // Randomize the starting Y offset based on index for a more organic feel
-      const startY = 40 + (i % 3) * 20;
-      
-      gsap.fromTo(item, 
-        { 
-          scale: 0.5, 
-          opacity: 0, 
-          y: `${startY}vh` 
-        },
-        {
-          scale: 1,
-          opacity: 1,
-          y: "0vh",
-          ease: "none",
-          scrollTrigger: {
-            trigger: item,
-            start: "top bottom",
-            end: "center 40%",
-            scrub: true
-          }
+  if (!teamSection || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  // [x offset vw, y offset vh, rotation deg] — unique per card index
+  const entries = [
+    { x: '-80vw', y: '0vh',   rotation: -6  },   // t-1: from far left
+    { x: '80vw',  y: '-10vh', rotation: 5   },   // t-2: from far right, slightly up
+    { x: '-20vw', y: '70vh',  rotation: -4  },   // t-3: from bottom-left
+    { x: '60vw',  y: '-30vh', rotation: 8   },   // t-4: from top-right
+    { x: '-90vw', y: '20vh',  rotation: -7  },   // t-5: from far left, slightly down
+    { x: '0vw',   y: '80vh',  rotation: 3   },   // t-6: from straight below
+    { x: '70vw',  y: '40vh',  rotation: 6   },   // t-7: from bottom-right
+  ];
+
+  const wraps = teamSection.querySelectorAll('.team-img-wrap');
+
+  wraps.forEach((wrap, i) => {
+    const { x, y, rotation } = entries[i] || { x: '0vw', y: '60vh', rotation: 0 };
+
+    gsap.fromTo(wrap,
+      { opacity: 0, x, y, rotation, scale: 0.85 },
+      {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        rotation: 0,
+        scale: 1,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: wrap,
+          start: 'top 90%',
+          end: 'center 45%',
+          scrub: 1.2,
         }
-      );
-    });
-  }
+      }
+    );
+  });
 })();
 
 /* ========================================
