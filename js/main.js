@@ -32,6 +32,16 @@ window.addEventListener('load', () => {
         ScrollTrigger.refresh();
       });
     });
+    // Fonts load async — reflow after fonts settle shifts all element heights,
+    // invalidating every ScrollTrigger start/end point calculated before fonts were ready.
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        window.scrollTo(0, 0);
+        ScrollTrigger.refresh();
+      });
+    }
+    // Safety net: catch any remaining layout shifts (images, custom fonts via @font-face)
+    setTimeout(() => { ScrollTrigger.refresh(); }, 600);
   }
 });
 
@@ -1167,6 +1177,19 @@ window.addEventListener('load', () => {
 
   gsap.registerPlugin(ScrollTrigger);
 
+  // ── Fonts-ready refresh (catches web font reflows that shift ScrollTrigger positions) ──
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      ScrollTrigger.refresh();
+    });
+  }
+  // Debounced resize refresh
+  let _stResizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(_stResizeTimer);
+    _stResizeTimer = setTimeout(() => ScrollTrigger.refresh(), 250);
+  });
+
   // ── Hero Parallax ──
   const triggerElement = document.querySelector('[data-parallax-layers]');
 
@@ -1243,6 +1266,9 @@ window.addEventListener('load', () => {
     const cards      = gsap.utils.toArray('#arcRing > .a-card');
     const total      = cards.length;
     const ringRadius = arcRing.offsetWidth / 2;
+    // Guard: if layout hasn't settled yet (offsetWidth = 0), bail out — prevents all
+    // cards from stacking at 0,0 which causes the "elements eating each other" overlap
+    if (!ringRadius) return;
 
     // Clone each card once so we have 14 total — fills the full 360° with no blank gap
     cards.forEach((card, i) => {
@@ -1267,7 +1293,8 @@ window.addEventListener('load', () => {
         top:             cy - card.offsetHeight / 2,
         rotation:        angleDeg + 90,
         transformOrigin: 'center center',
-        force3D:         true
+        force3D:         true,
+        opacity:         1   // reveal now that position is correct
       });
     });
 

@@ -1,0 +1,1 @@
+- [GSAP ScrollTrigger font race fix](gsap-font-race.md) — elements overlap on first load when fonts are uncached; fix with fonts.ready refresh + CSS pre-hide

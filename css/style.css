@@ -714,12 +714,15 @@ select {
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 12px 48px rgba(0, 0, 0, 0.18);
-  will-change: transform;
+  will-change: transform, opacity;
   backface-visibility: hidden;
   background-color: var(--dark-bg);
   pointer-events: auto;
   cursor: pointer;
   transition: box-shadow 0.3s ease;
+  /* Pre-hide: before GSAP positions them, all cards stack at 0,0 causing overlap.
+     GSAP sets opacity:1 immediately after positioning each card. */
+  opacity: 0;
 }
 
 /* ── GIF CARD ── */
@@ -5007,7 +5010,10 @@ body::after {
   aspect-ratio: 3/4;
   overflow: hidden;
   border-radius: 12px;
-  will-change: transform;
+  will-change: transform, opacity;
+  /* GSAP animates these in from opacity:0 — pre-hide in CSS so there's
+     no visible flash before GSAP applies its initial 'from' state */
+  opacity: 0;
 }
 
 .team-img {
