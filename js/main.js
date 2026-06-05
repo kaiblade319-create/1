@@ -1918,35 +1918,63 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
   })();
 
-  // ── Project Scroll Rows (horizontal drift on scroll) ──
+  // ── Pinned Project Rows (page locks; rows travel in opposite directions) ──
   (function initProjRows() {
     const section = document.getElementById('project-rows');
     if (!section || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
     const rowRight = section.querySelector('[data-proj-row="right"]');
     const rowLeft  = section.querySelector('[data-proj-row="left"]');
+    if (!rowRight || !rowLeft) return;
 
-    const st = {
-      trigger: section,
-      start: 'top bottom',
-      end: 'bottom top',
-      scrub: 1.6
-    };
+    function buildPin() {
+      // Kill any previous instance
+      ScrollTrigger.getAll().forEach(t => {
+        if (t.vars && t.vars.trigger === section) t.kill();
+      });
+      gsap.set([rowRight, rowLeft], { clearProps: 'transform' });
 
-    // Row drifts from left→right as section scrolls into/through view
-    if (rowRight) {
-      gsap.fromTo(rowRight,
-        { xPercent: -10 },
-        { xPercent: 10, ease: 'none', scrollTrigger: st }
-      );
+      const card   = rowRight.querySelector('.proj-card');
+      if (!card) return;
+      const cardW  = card.offsetWidth;
+      const gap    = parseFloat(getComputedStyle(rowRight).gap) || 20;
+      const count  = rowRight.querySelectorAll('.proj-card').length;
+      const rowW   = count * cardW + (count - 1) * gap;
+
+      // Distance the rows need to travel so ALL cards pass through the viewport
+      const travel = Math.max(rowW - window.innerWidth + 40, 300);
+
+      // Row B (10→1) starts shifted left so card-10 is at left edge on entry
+      gsap.set(rowLeft, { x: -travel });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: `+=${travel}`,
+          pin: true,
+          scrub: 1.2,
+          anticipatePin: 1
+        }
+      });
+
+      // Top row glides LEFT  →  01 enters first, 10 exits last
+      tl.to(rowRight, { x: -travel, ease: 'none' }, 0);
+      // Bottom row glides RIGHT  →  10 enters first, 01 exits last
+      tl.to(rowLeft,  { x: 0,       ease: 'none' }, 0);
     }
 
-    // Row drifts from right→left
-    if (rowLeft) {
-      gsap.fromTo(rowLeft,
-        { xPercent: 10 },
-        { xPercent: -10, ease: 'none', scrollTrigger: st }
-      );
-    }
+    // Run after full layout paint so offsetWidth is correct
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      buildPin();
+      ScrollTrigger.refresh();
+    }));
+
+    // Rebuild on resize (debounced)
+    let _resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(_resizeTimer);
+      _resizeTimer = setTimeout(buildPin, 300);
+    });
   })();
 });

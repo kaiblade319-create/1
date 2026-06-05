@@ -5608,65 +5608,63 @@ body.bb-flip-hint-seen .flip-tap-hint {
    PROJECT SCROLL ROWS  (scroll-driven horizontal drift)
    ═══════════════════════════════════════════════════ */
 .proj-rows-section {
-  padding: clamp(60px, 8vw, 120px) 0;
   background: #F3F3F4;
   overflow: hidden;
+  /* height comes from two rows + their padding — GSAP pins this */
 }
 
 .proj-rows-inner {
   display: flex;
   flex-direction: column;
-  gap: clamp(16px, 2vw, 28px);
+  gap: 22px;
+  padding: clamp(48px, 6vw, 88px) 0;
 }
 
 .proj-row {
   display: flex;
-  gap: clamp(12px, 1.5vw, 20px);
+  gap: 20px;
   will-change: transform;
 }
 
-/* GSAP owns the transform entirely — no CSS offset here */
-.proj-row--right,
-.proj-row--left {
-  /* intentionally empty — initial position set by gsap.fromTo() */
-}
+/* GSAP owns all transforms — no CSS offsets on rows */
 
 .proj-card {
   flex-shrink: 0;
-  width: clamp(240px, 24vw, 340px);
-  aspect-ratio: 4 / 5;
-  border-radius: 20px;
+  width: clamp(280px, 28vw, 400px);
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.07);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
   cursor: default;
 }
 
 .proj-card:hover {
-  box-shadow: 0 16px 48px rgba(61, 61, 255, 0.12);
-  border-color: rgba(61, 61, 255, 0.2);
+  box-shadow: 0 20px 56px rgba(61, 61, 255, 0.13);
+  border-color: rgba(61, 61, 255, 0.22);
 }
 
 .proj-card-num {
   font-family: var(--font-display);
-  font-size: clamp(40px, 5vw, 72px);
+  font-size: clamp(48px, 5.5vw, 80px);
   font-weight: 800;
-  color: rgba(0, 0, 0, 0.08);
-  letter-spacing: -2px;
+  color: rgba(0, 0, 0, 0.07);
+  letter-spacing: -3px;
   user-select: none;
-  transition: color 0.35s ease;
+  transition: color 0.4s ease;
+  pointer-events: none;
 }
 
 .proj-card:hover .proj-card-num {
-  color: rgba(61, 61, 255, 0.18);
+  color: rgba(61, 61, 255, 0.15);
 }
 
-@media (max-width: 680px) {
+@media (max-width: 768px) {
   .proj-card {
-    width: clamp(160px, 42vw, 220px);
+    width: clamp(200px, 52vw, 280px);
   }
 }
