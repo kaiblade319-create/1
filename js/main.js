@@ -1917,4 +1917,41 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isVisible) { currentX = e.clientX; currentY = e.clientY; }
     }, { passive: true });
   })();
+
+  // ── Project Scroll Rows (horizontal drift on scroll) ──
+  (function initProjRows() {
+    const section = document.getElementById('project-rows');
+    if (!section || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+    const rowRight = section.querySelector('[data-proj-row="right"]');
+    const rowLeft  = section.querySelector('[data-proj-row="left"]');
+
+    const DRIFT = '8%';
+
+    if (rowRight) {
+      gsap.to(rowRight, {
+        x: DRIFT,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.4
+        }
+      });
+    }
+
+    if (rowLeft) {
+      gsap.to(rowLeft, {
+        x: '-' + DRIFT,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.4
+        }
+      });
+    }
+  })();
 });
