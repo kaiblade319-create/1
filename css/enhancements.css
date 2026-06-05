@@ -2609,3 +2609,307 @@ body.bb-card-hint-seen .info-card .info-card-content::after {
 
   .cn-cta { display: none; }
 }
+
+/* ========================================
+   BB CARDS — REDESIGNED (About + Services)
+   ======================================== */
+.cards-section--redesign {
+  background: #111;
+  padding: clamp(40px, 6vh, 72px) 0;
+}
+
+.bb-cards-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 60px);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0;
+}
+
+/* ── Shared card base ── */
+.bb-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #1e1e1e;
+  border-radius: 28px;
+  padding: clamp(24px, 3.5vw, 44px);
+  min-height: clamp(300px, 38vh, 420px);
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s ease;
+}
+
+.bb-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.45);
+}
+
+/* ── LEFT: About card ── */
+.bb-card--about {
+  border-radius: 28px 28px 28px 28px;
+}
+
+.bb-card-stamp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
+  margin-bottom: auto;
+  flex-shrink: 0;
+}
+
+.bb-card-stamp svg {
+  animation: bb-stamp-spin 20s linear infinite;
+}
+
+@keyframes bb-stamp-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.bb-card--about:hover .bb-card-stamp svg {
+  animation-play-state: paused;
+}
+
+.bb-card-body {
+  margin-top: auto;
+  padding-top: 32px;
+}
+
+.bb-card-heading {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(26px, 3.6vw, 48px);
+  line-height: 1.05;
+  color: #fff;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+}
+
+.bb-card-heading--accent {
+  color: #3D3DFF;
+}
+
+.bb-card-sub {
+  font-family: var(--font-body);
+  font-size: clamp(12px, 1.2vw, 15px);
+  color: rgba(255,255,255,0.5);
+  margin-top: 10px;
+  letter-spacing: 0.2px;
+}
+
+.bb-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 28px;
+}
+
+/* ── Arrow buttons ── */
+.bb-arrow-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #fff;
+  transition: background 0.3s ease, transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.bb-card:hover .bb-arrow-btn {
+  background: #3D3DFF;
+  border-color: #3D3DFF;
+  transform: rotate(-45deg);
+}
+
+.bb-arrow-btn--circle {
+  width: 52px;
+  height: 52px;
+  font-size: 20px;
+}
+
+/* ── CENTER: Floating button ── */
+.bb-center-btn {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: #f97316;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: #fff;
+  z-index: 10;
+  position: relative;
+  flex-shrink: 0;
+  margin: 0 -16px;
+  box-shadow: 0 8px 32px rgba(249,115,22,0.4);
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease;
+}
+
+.bb-center-btn:hover {
+  transform: scale(1.12);
+  box-shadow: 0 12px 48px rgba(249,115,22,0.6);
+}
+
+.bb-center-btn-text {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.bb-center-btn-arrow {
+  font-size: 16px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+/* ── RIGHT: Services card ── */
+.bb-card--services {
+  justify-content: space-between;
+}
+
+.bb-tags-area {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, transparent 100%);
+}
+
+.bb-tags-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  animation: bb-tags-scroll 18s linear infinite;
+}
+
+.bb-tags-row--2 {
+  animation-direction: reverse;
+  animation-duration: 22s;
+}
+
+.bb-tags-row--3 {
+  animation-duration: 26s;
+}
+
+@keyframes bb-tags-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-40%); }
+}
+
+.bb-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(11px, 1.1vw, 14px);
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.85);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.bb-card--services:hover .bb-tag {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.bb-tag--ghost {
+  background: transparent;
+  border-color: transparent;
+  width: 60px;
+}
+
+/* Tag dot colors */
+.bb-tag-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bb-tag-dot--mint   { background: #6ee7b7; }
+.bb-tag-dot--white  { background: rgba(255,255,255,0.7); }
+.bb-tag-dot--yellow { background: #fde68a; }
+.bb-tag-dot--orange { background: #f97316; }
+.bb-tag-dot--green  { background: #4ade80; }
+
+/* Services footer */
+.bb-card-footer--services {
+  justify-content: space-between;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: 20px;
+}
+
+.bb-services-label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.bb-services-heading {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(28px, 3.5vw, 46px);
+  letter-spacing: -0.5px;
+  color: #fff;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .bb-cards-wrapper {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .bb-center-btn {
+    margin: 0 auto;
+    width: 72px;
+    height: 72px;
+  }
+
+  .bb-card {
+    min-height: 280px;
+  }
+
+  .bb-tags-row {
+    animation: none;
+    flex-wrap: wrap;
+  }
+
+  .bb-tags-area {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+}

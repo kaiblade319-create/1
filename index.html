@@ -386,54 +386,89 @@
   </section>
 
   <!-- ═══════════════ ABOUT US / OUR SERVICES CARDS ═══════════════ -->
-  <section class="cards-section section-pad">
-    <div class="container">
-      <div class="cards-grid">
-        <!-- About Us Card -->
-        <a href="about.html" class="info-card reveal magnetic-card">
-          <div class="info-card-bg" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=75');"></div>
-          <div class="card-base-layer">
-            <div class="info-card-content">
-              <h3 class="info-card-title">About<br>Us</h3>
-              <p class="info-card-subtitle">Who we are.</p>
-              <p class="info-card-body">We are a passionate team of <strong>innovators</strong> and <strong>creators</strong>. We don't just build websites; we craft immersive digital journeys that leave a lasting impact.</p>
-            </div>
+  <section class="cards-section cards-section--redesign">
+    <div class="bb-cards-wrapper">
+
+      <!-- LEFT: About Us Card -->
+      <a href="about.html" class="bb-card bb-card--about reveal">
+        <!-- Circular stamp badge -->
+        <div class="bb-card-stamp">
+          <svg viewBox="0 0 100 100" width="90" height="90">
+            <defs>
+              <path id="bb-stamp-circle" d="M 50,50 m -30,0 a 30,30 0 1,1 60,0 a 30,30 0 1,1 -60,0"/>
+            </defs>
+            <text font-size="10" font-family="var(--font-display)" font-weight="700" letter-spacing="3" fill="rgba(255,255,255,0.7)" text-anchor="middle">
+              <textPath href="#bb-stamp-circle">★ BLINK BEYOND ★ PALGHAR ★ INDIA ★</textPath>
+            </text>
+            <text x="50" y="46" text-anchor="middle" font-family="var(--font-display)" font-weight="900" font-size="14" fill="#fff" letter-spacing="1">BB</text>
+            <text x="50" y="59" text-anchor="middle" font-family="var(--font-body)" font-size="6" fill="rgba(255,255,255,0.6)" letter-spacing="2">STUDIO</text>
+          </svg>
+        </div>
+
+        <!-- Heading -->
+        <div class="bb-card-body">
+          <h3 class="bb-card-heading">We are a <span class="bb-card-heading--accent">Digital Marketing</span> agency</h3>
+          <p class="bb-card-sub">Growing brands from Palghar to the world</p>
+        </div>
+
+        <!-- Bottom arrow buttons -->
+        <div class="bb-card-footer">
+          <div class="bb-arrow-btn">→</div>
+        </div>
+      </a>
+
+      <!-- CENTER: Floating About button -->
+      <a href="about.html" class="bb-center-btn">
+        <span class="bb-center-btn-text">ABOUT</span>
+        <span class="bb-center-btn-arrow">→</span>
+      </a>
+
+      <!-- RIGHT: Services Card -->
+      <a href="services.html" class="bb-card bb-card--services reveal reveal-delay-2">
+        <!-- Scrolling pill tags -->
+        <div class="bb-tags-area">
+          <div class="bb-tags-row bb-tags-row--1">
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--mint"></span>Web Dev</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--white"></span>Social Media</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--yellow"></span>Branding</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--orange"></span>Content</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--mint"></span>Web Dev</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--white"></span>Social Media</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--yellow"></span>Branding</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--orange"></span>Content</span>
           </div>
-          <!-- Magnetic Reveal Layer -->
-          <div class="magnetic-reveal">
-            <div class="magnetic-reveal-inner">
-              <div class="magnetic-reveal-content">
-                <span class="reveal-icon">👥</span>
-                <span class="reveal-title">MEET THE TEAM</span>
-                <span class="reveal-subtitle">Discover the creative minds behind Blink Beyond</span>
-                <span class="reveal-cta">Explore →</span>
-              </div>
-            </div>
+          <div class="bb-tags-row bb-tags-row--2">
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--mint"></span>SEO</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--orange"></span>Performance Ads</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--white"></span>Analytics</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--green"></span>Growth</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--mint"></span>SEO</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--orange"></span>Performance Ads</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--white"></span>Analytics</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--green"></span>Growth</span>
           </div>
-        </a>
-        <!-- Our Services Card -->
-        <a href="services.html" class="info-card reveal reveal-delay-2 magnetic-card">
-          <div class="info-card-bg" style="background-image: url('https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=75');"></div>
-          <div class="card-base-layer">
-            <div class="info-card-content">
-              <h3 class="info-card-title">Our<br>Services</h3>
-              <p class="info-card-subtitle">What we do.</p>
-              <p class="info-card-body">From <strong>brand identity</strong> to <strong>high-performance marketing</strong>, we provide end-to-end solutions that elevate your business to the next level.</p>
-            </div>
+          <div class="bb-tags-row bb-tags-row--3">
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--green"></span>Strategy</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--yellow"></span>Email Mktg</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--white"></span>Video Ads</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--mint"></span>Copywriting</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--green"></span>Strategy</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--yellow"></span>Email Mktg</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--white"></span>Video Ads</span>
+            <span class="bb-tag"><span class="bb-tag-dot bb-tag-dot--mint"></span>Copywriting</span>
           </div>
-          <!-- Magnetic Reveal Layer -->
-          <div class="magnetic-reveal">
-            <div class="magnetic-reveal-inner">
-              <div class="magnetic-reveal-content">
-                <span class="reveal-icon">🚀</span>
-                <span class="reveal-title">OUR SERVICES</span>
-                <span class="reveal-subtitle">Web • Social Media • Performance Marketing</span>
-                <span class="reveal-cta">View All →</span>
-              </div>
-            </div>
+        </div>
+
+        <!-- Bottom label + heading -->
+        <div class="bb-card-footer bb-card-footer--services">
+          <div>
+            <p class="bb-services-label">WHAT WE DO</p>
+            <h3 class="bb-services-heading">Our Services</h3>
           </div>
-        </a>
-      </div>
+          <div class="bb-arrow-btn bb-arrow-btn--circle">→</div>
+        </div>
+      </a>
+
     </div>
   </section>
 
