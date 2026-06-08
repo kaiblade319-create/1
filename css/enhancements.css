@@ -1334,6 +1334,11 @@
   .parallax-images {
     gap: 12px;
   }
+
+  .home-play-btn,
+  .play-circle {
+    display: none !important;
+  }
 }
 
 /* Hero mobile CTA — hidden on desktop, shown on mobile */
@@ -1647,21 +1652,9 @@
     display: none !important;
   }
 
-  .home-play-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 16px !important;
-    cursor: pointer !important;
-  }
-
-  .play-text,
-  .reel-text {
-    font-family: var(--font-display) !important;
-    font-size: clamp(32px, 10vw, 52px) !important;
-    font-weight: 800 !important;
-    letter-spacing: -0.03em !important;
-    color: rgba(255,255,255,0.55) !important;
-    text-transform: uppercase !important;
+  .home-play-btn,
+  .play-circle {
+    display: none !important;
   }
 
   /* Shrink the scroll spacer — not needed on mobile */
