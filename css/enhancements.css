@@ -1338,7 +1338,8 @@
   .home-play-btn,
   .play-circle,
   #home-reel-section,
-  .home-reel-spacer {
+  .home-reel-spacer,
+  #about-reel-section {
     display: none !important;
   }
 
@@ -3086,6 +3087,10 @@ body.bb-card-hint-seen .info-card .info-card-content::after {
 
   .bb-card {
     min-height: 280px;
+  }
+
+  #about-reel-section {
+    display: none !important;
   }
 
   .bb-tags-row {
