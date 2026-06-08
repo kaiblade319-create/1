@@ -1582,7 +1582,27 @@ document.addEventListener('DOMContentLoaded', () => {
     l.addEventListener('mouseleave', () => { l.style.transform = ''; });
   });
 
-  if (window.innerWidth <= 768) return;
+  /* ── Mobile: tap Play/Reel to open video fullscreen ── */
+  if (window.innerWidth <= 768) {
+    const homePlayBtn = document.querySelector('.home-play-btn');
+    const homeFsClose = document.getElementById('home-fs-close');
+
+    if (homePlayBtn && homeCard) {
+      homePlayBtn.addEventListener('click', () => {
+        homeCard.classList.add('mobile-open');
+        document.body.style.overflow = 'hidden';
+      });
+    }
+
+    if (homeFsClose && homeCard) {
+      homeFsClose.addEventListener('click', () => {
+        homeCard.classList.remove('mobile-open');
+        document.body.style.overflow = '';
+      });
+    }
+
+    return;
+  }
 
   const homePlayCircle = document.getElementById('home-play-circle');
   const homePlaySvg    = document.getElementById('home-play-svg');
