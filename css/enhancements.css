@@ -1341,6 +1341,21 @@
   .home-reel-spacer {
     display: none !important;
   }
+
+  .bb-tags-row {
+    animation: none;
+    flex-wrap: wrap;
+  }
+
+  .bb-tags-row .bb-tag:nth-child(n+5) {
+    display: none;
+  }
+
+  .bb-tags-area {
+    mask-image: none;
+    -webkit-mask-image: none;
+    overflow: hidden;
+  }
 }
 
 /* Hero mobile CTA — hidden on desktop, shown on mobile */
@@ -3066,8 +3081,13 @@ body.bb-card-hint-seen .info-card .info-card-content::after {
     flex-wrap: wrap;
   }
 
+  .bb-tags-row .bb-tag:nth-child(n+5) {
+    display: none;
+  }
+
   .bb-tags-area {
     mask-image: none;
     -webkit-mask-image: none;
+    overflow: hidden;
   }
 }
