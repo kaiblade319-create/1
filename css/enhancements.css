@@ -1336,7 +1336,9 @@
   }
 
   .home-play-btn,
-  .play-circle {
+  .play-circle,
+  #home-reel-section,
+  .home-reel-spacer {
     display: none !important;
   }
 }
@@ -1653,7 +1655,9 @@
   }
 
   .home-play-btn,
-  .play-circle {
+  .play-circle,
+  #home-reel-section,
+  .home-reel-spacer {
     display: none !important;
   }
 
