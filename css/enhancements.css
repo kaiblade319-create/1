@@ -1392,21 +1392,63 @@
     position: relative !important;
   }
 
-  /* HIDE ALL ARC/ANIMATIONS */
-  .arc-scene,
+  /* HIDE COMPLEX ARC ANIMATION STRUCTURE — replaced by scroll strip */
   .arc-orbit-path,
-  .arc-ring,
-  .arc-scene .a-card,
-  .a-card,
   .a-card-clone,
-  #card,
-  #card-anchor,
-  .hero-inner-text,
-  .play-reel-btn {
+  #card-anchor {
     display: none !important;
     visibility: hidden !important;
-    position: absolute !important;
     pointer-events: none !important;
+  }
+
+  /* ARC SCENE — flat container on mobile */
+  .arc-scene {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+    margin-top: 32px !important;
+  }
+
+  /* ARC RING — horizontal scroll strip */
+  .arc-ring {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    gap: 14px !important;
+    padding: 12px 20px 20px !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    width: 100% !important;
+    transform: none !important;
+  }
+  .arc-ring::-webkit-scrollbar { display: none !important; }
+
+  /* ARC CARDS — static, visible on mobile */
+  .arc-scene .a-card,
+  .a-card {
+    position: relative !important;
+    display: flex !important;
+    flex: 0 0 200px !important;
+    width: 200px !important;
+    height: 148px !important;
+    opacity: 1 !important;
+    transform: none !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    scroll-snap-align: start !important;
+    border-radius: 14px !important;
+    visibility: visible !important;
+  }
+
+  .gif-num {
+    font-size: 36px !important;
   }
 
   .hero-text {
@@ -1524,6 +1566,82 @@
 
   .hero-mobile-cta .btn-secondary:hover {
     background: rgba(0,0,0,0.1);
+  }
+
+  /* ── Home reel section — mobile ── */
+  #home-reel-section {
+    position: relative !important;
+    margin-top: 0 !important;
+    top: auto !important;
+    background: #080808 !important;
+    width: 100% !important;
+    min-height: 260px !important;
+    height: auto !important;
+    padding: 48px 24px 56px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 36px !important;
+    z-index: 5 !important;
+  }
+
+  /* Paragraph (arc-hero-para) — visible on mobile */
+  #home-reel-section .hero-inner-text {
+    position: relative !important;
+    opacity: 1 !important;
+    transform: none !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    pointer-events: auto !important;
+  }
+
+  .arc-hero-para {
+    font-size: clamp(16px, 4.5vw, 22px) !important;
+    color: rgba(255,255,255,0.75) !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  /* Play Reel button — visible on mobile */
+  .about-reel-inner {
+    display: flex !important;
+    position: relative !important;
+    z-index: 10 !important;
+    pointer-events: auto !important;
+  }
+
+  .reel-h-line {
+    display: none !important;
+  }
+
+  .reel-ring-svg {
+    display: none !important;
+  }
+
+  .home-play-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    cursor: pointer !important;
+  }
+
+  .play-text,
+  .reel-text {
+    font-family: var(--font-display) !important;
+    font-size: clamp(32px, 10vw, 52px) !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.03em !important;
+    color: rgba(255,255,255,0.55) !important;
+    text-transform: uppercase !important;
+  }
+
+  /* Shrink the scroll spacer — not needed on mobile */
+  .home-reel-spacer {
+    height: 0 !important;
   }
 
   /* ── Nav mobile ── */
