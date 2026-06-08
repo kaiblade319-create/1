@@ -1343,17 +1343,29 @@
   }
 
   .bb-tags-row {
-    animation: none;
-    flex-wrap: wrap;
+    animation: bb-tags-scroll 18s linear infinite;
+    flex-wrap: nowrap;
+  }
+
+  .bb-tags-row--2 {
+    animation-direction: reverse;
+    animation-duration: 22s;
+  }
+
+  .bb-tags-row--3 {
+    animation-duration: 26s;
   }
 
   .bb-tags-row .bb-tag:nth-child(n+5) {
-    display: none;
+    display: inline-flex;
+  }
+
+  .bb-tag {
+    font-size: 11px;
+    padding: 7px 12px;
   }
 
   .bb-tags-area {
-    mask-image: none;
-    -webkit-mask-image: none;
     overflow: hidden;
   }
 }
@@ -3077,17 +3089,29 @@ body.bb-card-hint-seen .info-card .info-card-content::after {
   }
 
   .bb-tags-row {
-    animation: none;
-    flex-wrap: wrap;
+    animation: bb-tags-scroll 18s linear infinite;
+    flex-wrap: nowrap;
+  }
+
+  .bb-tags-row--2 {
+    animation-direction: reverse;
+    animation-duration: 22s;
+  }
+
+  .bb-tags-row--3 {
+    animation-duration: 26s;
   }
 
   .bb-tags-row .bb-tag:nth-child(n+5) {
-    display: none;
+    display: inline-flex;
+  }
+
+  .bb-tag {
+    font-size: 11px;
+    padding: 7px 12px;
   }
 
   .bb-tags-area {
-    mask-image: none;
-    -webkit-mask-image: none;
     overflow: hidden;
   }
 }
