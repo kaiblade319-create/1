@@ -1345,8 +1345,14 @@ body.nav-open .ticker-wrap {
   }
 
   .hero-page {
-    height: 170vh;
+    height: auto;
+    min-height: auto;
   }
+}
+
+/* Mobile strip hidden on desktop */
+.mobile-work-strip {
+  display: none;
 }
 
 /* ========================================
