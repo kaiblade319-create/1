@@ -209,22 +209,7 @@
 
 /* Vertical center line */
 .hero-center-line {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0,0,0,0.1) 15%,
-    rgba(0,0,0,0.15) 50%,
-    rgba(0,0,0,0.06) 80%,
-    transparent 100%
-  );
-  pointer-events: none;
-  z-index: 6;
+  display: none;
 }
 
 .hero-text {
